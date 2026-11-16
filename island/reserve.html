@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ご予約 | しおさい荘</title>
+<meta name="description" content="空室カレンダーとご予約フォーム。しおさい荘は一日三組限定の宿です。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@500;700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="page">
+<header class="hd">
+  <a class="logo" href="index.html"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.5 0s5 3 7.5 0 4-3 5.5-1"/><path d="M8 22c2-2 4.5-2 7 0s5 2 7 0"/></svg>しおさい荘</a>
+  <button class="menu-btn" type="button" aria-label="メニューを開く" aria-expanded="false"><span></span></button>
+  <nav class="gnav" aria-label="サイト内メニュー"><a href="rooms.html">客室</a><a href="food.html">お食事</a><a href="access.html">アクセス</a><a href="reserve.html" class="pill sm red" aria-current="page">ご予約</a></nav>
+</header>
+
+<section class="ph">
+  <div class="wrap ph-in">
+    <div class="rv">
+      <span class="eb">RESERVATION</span>
+      <h1>空室を見て、<br>そのまま予約</h1>
+      <p class="lead">カレンダーから到着日を選ぶと、フォームに日付が入ります。料金の目安もその場で計算します。</p>
+    </div>
+    <div class="ph-art rv"><svg viewBox="0 0 360 300" aria-hidden="true">
+<path class="ink" fill="var(--wall)" d="M46 128h268v168H46z"/><path class="ink" fill="var(--wood)" d="M150 200h60v96h-60z"/>
+<path class="ink" fill="var(--paper)" d="M150 200h60v24h-60z"/><path class="ink" fill="none" d="M170 200v24M190 200v24"/>
+<path class="ink" fill="var(--band)" d="M72 166h52v44H72zM236 166h52v44h-52z"/><path class="ink" fill="none" d="M98 166v44M72 188h52M262 166v44M236 188h52"/>
+<path class="ink" fill="var(--wall)" d="M250 52h28v50h-28z"/><path class="ink" fill="var(--roof)" d="M180 24L340 138H20z"/>
+<path class="ink" fill="none" d="M60 120h240M100 92h160M140 64h80"/></svg></div>
+  </div>
+  <svg class="strip" aria-hidden="true"></svg>
+</section>
+
+<main>
+
+<section class="sec">
+  <div class="wrap split" style="align-items:start">
+    <div class="cal card rv" id="cal">
+      <div class="cal-hd">
+        <button type="button" id="prev" aria-label="前の月">&lt;</button>
+        <h3 id="ym"></h3>
+        <button type="button" id="next" aria-label="次の月">&gt;</button>
+      </div>
+      <div class="cal-grid" id="grid"></div>
+      <div class="legend"><span>○ 空室あり</span><span>△ 残りわずか</span><span>× 満室</span></div>
+    </div>
+
+    <div class="card rv" style="overflow:hidden">
+      <form class="form" id="form" novalidate>
+        <div class="row">
+          <div class="field"><label for="date">到着日<span class="req">必須</span></label><input type="date" id="date" name="date" required><p class="err">到着日を選んでください</p></div>
+          <div class="field"><label for="nights">泊数</label><select id="nights" name="nights"><option>1</option><option>2</option><option>3</option></select></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="room">お部屋</label>
+            <select id="room" name="room">
+              <option value="16500">凪 / 海側和室</option>
+              <option value="19800">潮騒 / 縁側つき和洋室</option>
+              <option value="22000">松風 / 庭側の離れ</option>
+            </select></div>
+          <div class="field"><label for="guests">人数</label><select id="guests" name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+        </div>
+        <div class="est"><span>料金の目安(1泊2食・税込)</span><strong id="total">0円</strong></div>
+        <div class="field"><label for="name">お名前<span class="req">必須</span></label><input id="name" name="name" autocomplete="name" required><p class="err">お名前を入力してください</p></div>
+        <div class="row">
+          <div class="field"><label for="mail">メールアドレス<span class="req">必須</span></label><input type="email" id="mail" name="mail" autocomplete="email" required><p class="err">メールアドレスの形式を確認してください</p></div>
+          <div class="field"><label for="tel">電話番号</label><input type="tel" id="tel" name="tel" autocomplete="tel"></div>
+        </div>
+        <div class="field"><label for="msg">ご要望(アレルギー、到着の便など)</label><textarea id="msg" name="msg"></textarea></div>
+        <div><button type="submit" class="pill red" style="border:3px solid var(--line)">予約を申し込む</button></div>
+        <p style="font-size:13px;color:var(--muted)">サンプルサイトのため、送信してもどこにも届きません。</p>
+      </form>
+      <div class="done" id="done">
+        <svg viewBox="0 0 96 96" aria-hidden="true"><circle class="ink" fill="var(--band)" cx="48" cy="48" r="40"/><path class="ink" fill="none" d="M30 50l12 12 24-26"/></svg>
+        <h2>お申し込みを受け付けました</h2>
+        <p id="doneText" style="color:var(--muted)"></p>
+        <p style="margin-top:24px"><a class="pill sm" href="index.html">トップへ戻る</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="ft">
+  <div class="wrap ft-in">
+    <div>
+      <a class="logo" href="index.html"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.5 0s5 3 7.5 0 4-3 5.5-1"/><path d="M8 22c2-2 4.5-2 7 0s5 2 7 0"/></svg>しおさい荘</a>
+      <p style="margin-top:16px">〒000-0000 架空県しおさい島 1-2<br>TEL 000-000-0000(受付 9:00〜18:00)</p>
+    </div>
+    <ul>
+      <li><a href="index.html">トップ</a></li>
+      <li><a href="rooms.html">客室</a></li>
+      <li><a href="food.html">お食事</a></li>
+      <li><a href="access.html">アクセス</a></li>
+      <li><a href="reserve.html">ご予約</a></li>
+    </ul>
+    <ul>
+      <li>チェックイン 15:00〜18:00</li>
+      <li>チェックアウト 10:00</li>
+      <li>一日三組限定</li>
+      <li>定休日 水曜日</li>
+    </ul>
+  </div>
+  <p class="note">このサイトはWeb制作のサンプルです。宿、住所、電話番号、料金、時刻表はすべて架空のものです。</p>
+</footer>
+</div>
+<div id="ping"></div><div id="cur"></div>
+<script src="site.js"></script>
+<script>
+(function(){
+  var ym=document.getElementById('ym'),grid=document.getElementById('grid'),date=document.getElementById('date');
+  var today=new Date();today.setHours(0,0,0,0);
+  var view=new Date(today.getFullYear(),today.getMonth(),1);
+  var maxView=new Date(today.getFullYear(),today.getMonth()+3,1);
+  function pad(n){return n<10?'0'+n:''+n}
+  function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+  // 架空の空室状況: 日付から決まる擬似乱数。水曜は定休日
+  function rooms(d){if(d.getDay()===3)return -1;var h=(d.getFullYear()*372+d.getMonth()*31+d.getDate())*2654435761%97;var r=h%4;if(d.getDay()===6&&r>1)r=1;return r>3?3:r}
+  function draw(){
+    ym.textContent=view.getFullYear()+'年'+(view.getMonth()+1)+'月';
+    document.getElementById('prev').disabled=view<=new Date(today.getFullYear(),today.getMonth(),1);
+    document.getElementById('next').disabled=view>=maxView;
+    var h='';['日','月','火','水','木','金','土'].forEach(function(w){h+='<div class="dw">'+w+'</div>'});
+    var first=view.getDay(),days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+    for(var i=0;i<first;i++)h+='<div></div>';
+    for(var d=1;d<=days;d++){
+      var dt=new Date(view.getFullYear(),view.getMonth(),d),r=rooms(dt),past=dt<today,v=iso(dt);
+      var mark=r===-1?'休':r===0?'×':r===1?'△':'○',cls=r>=2?'ok':r===1?'few':'';
+      var dis=past||r<=0;
+      h+='<button type="button" class="'+cls+(date.value===v?' sel':'')+'" data-d="'+v+'"'+(dis?' disabled':'')+' aria-label="'+(dt.getMonth()+1)+'月'+d+'日 '+mark+'">'+d+'<i>'+mark+'</i></button>';
+    }
+    grid.innerHTML=h;
+  }
+  grid.addEventListener('click',function(e){var b=e.target.closest('button[data-d]');if(!b)return;date.value=b.dataset.d;date.closest('.field').classList.remove('bad');draw();calc()});
+  document.getElementById('prev').onclick=function(){view.setMonth(view.getMonth()-1);draw()};
+  document.getElementById('next').onclick=function(){view.setMonth(view.getMonth()+1);draw()};
+  date.min=iso(today);
+  date.addEventListener('change',function(){if(date.value){var p=date.value.split('-');view=new Date(+p[0],+p[1]-1,1)}draw()});
+
+  var f=document.getElementById('form'),total=document.getElementById('total');
+  function price(){return +f.room.value*+f.guests.value*+f.nights.value}
+  function calc(){total.textContent=price().toLocaleString('ja-JP')+'円'}
+  ['room','guests','nights'].forEach(function(n){f[n].addEventListener('change',calc)});
+  calc();draw();
+
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=true;
+    [['date',function(v){return !!v}],['name',function(v){return v.trim().length>0}],['mail',function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}]].forEach(function(c){
+      var el=f[c[0]],good=c[1](el.value);el.closest('.field').classList.toggle('bad',!good);if(!good&&ok){el.focus();ok=false}
+    });
+    if(!ok)return;
+    var room=f.room.options[f.room.selectedIndex].text;
+    document.getElementById('doneText').textContent=f.date.value.replace(/-/g,'/')+' から '+f.nights.value+'泊、'+room+'、'+f.guests.value+'名様。料金の目安は '+price().toLocaleString('ja-JP')+'円です。';
+    f.style.display='none';document.getElementById('done').style.display='block';
+  });
+})();
+</script>
+</body>
+</html>

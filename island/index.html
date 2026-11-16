@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>しおさい荘 | 波の音で目覚める島の宿</title>
+<meta name="description" content="瀬戸内の小さな島にある、一日三組だけの古民家宿。(Web制作のサンプルとして作った架空の宿です)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@500;700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#e9e3d2;--ink:#221d16;--line:#17140f;--band:#cfd6cf;--band2:#d8ddd4;--sand:#dcc89c;--roof:#b4533b;--wall:#f1ead8;--leaf:#6f8a5e;--leaf2:#5d7650;--wood:#7a593b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--paper);overflow:hidden;color:var(--ink);-webkit-font-smoothing:antialiased}
+html.fine,html.fine *{cursor:none}
+a{color:inherit;text-decoration:none}
+
+.frame{position:fixed;inset:14px;border-radius:34px;overflow:hidden;background:var(--paper);isolation:isolate}
+.frame::after{content:"";position:absolute;inset:0;border:6px solid var(--line);border-radius:34px;pointer-events:none;z-index:30}
+#shade{position:absolute;left:-12%;top:-12%;width:124%;height:124%;mix-blend-mode:multiply;opacity:.2;pointer-events:none;z-index:25;will-change:transform}
+
+#scene{position:absolute;left:0;top:0;transform-origin:0 0}
+#scene>*{position:absolute}
+svg.w{left:0;top:0;overflow:visible;pointer-events:none}
+svg.w path{stroke:var(--line);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.spr{will-change:transform}
+.spr svg{display:block;width:100%;height:100%;overflow:visible}
+.ink{stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+#ferry{transform-origin:50% 100%}
+#pine{transform-origin:45% 100%}
+#cat{transform-origin:50% 100%}
+
+/* copy */
+.t1{left:150px;top:282px;width:680px;white-space:nowrap}
+.t1 .eb{font:600 26px/1 "Shippori Mincho B1",serif;letter-spacing:.32em}
+h1,h2{font-family:"Shippori Mincho B1",serif;font-weight:800;letter-spacing:-.04em}
+h1{font-size:92px;line-height:1.08;margin-top:26px}
+.pill{display:inline-block;position:relative;font:700 19px/1 "Zen Maru Gothic",sans-serif;letter-spacing:.12em;
+  border:3px solid var(--line);border-radius:999px;background:#efe9da;box-shadow:0 7px 0 -1px var(--paper),0 7px 0 2px var(--line);transition:transform .25s,box-shadow .25s}
+.pill:hover{transform:translateY(3px);box-shadow:0 4px 0 -1px var(--paper),0 4px 0 2px var(--line)}
+.t1 .pill{margin-top:40px;padding:20px 58px 18px}
+.t2{left:1000px;top:452px;width:540px}
+h2{font-size:74px;line-height:1.1}
+.t2 p{margin-top:22px;font:700 16px/1.95 "Zen Kaku Gothic New",sans-serif;letter-spacing:.08em}
+.btnw{display:inline-block;position:relative;margin-top:30px}
+.t2 .pill{font-size:17px;padding:15px 38px 13px}
+.tick{position:absolute;top:-15px;width:22px;height:4px;border-radius:2px;background:var(--line)}
+.tick.a{left:-30px;transform:rotate(24deg)}.tick.b{left:-16px;top:-23px;width:13px;transform:rotate(58deg)}.tick.c{right:-30px;transform:rotate(-30deg)}
+
+/* chrome */
+.logo{position:absolute;left:6.6%;top:54px;z-index:20;display:flex;align-items:center;gap:10px;font:800 28px/1 "Shippori Mincho B1",serif;letter-spacing:.02em}
+.logo svg{width:30px;height:30px}
+nav{position:absolute;right:5.4%;top:60px;z-index:20;display:flex;gap:clamp(30px,5.6vw,92px)}
+nav a{position:relative;font:700 14px/1 "Zen Kaku Gothic New",sans-serif;letter-spacing:.2em;padding:6px 0}
+nav a svg{position:absolute;left:100%;top:-6px;margin-left:6px;width:20px;height:20px;opacity:0;transform:translateY(-10px) rotate(-30deg);transform-origin:50% 0;transition:opacity .2s,transform .55s cubic-bezier(.3,1.9,.5,1)}
+nav a:hover svg{opacity:1;transform:none}
+.note{position:absolute;right:5.4%;bottom:34px;z-index:20;font:500 11px/1 "Zen Kaku Gothic New",sans-serif;letter-spacing:.12em;opacity:.7}
+
+/* cursor */
+#cur,#ping{position:fixed;left:0;top:0;z-index:50;pointer-events:none;border-radius:50%;display:none}
+html.fine #cur,html.fine #ping{display:block}
+#cur{width:var(--ring,40px);height:var(--ring,40px);margin:calc(var(--ring,40px)/-2);border:5px solid var(--line)}
+#ping{width:var(--ring,40px);height:var(--ring,40px);margin:calc(var(--ring,40px)/-2);border:1.5px solid var(--line);opacity:0}
+
+.portrait .t1{left:60px;top:200px;width:680px}
+.portrait #shade{opacity:.14}
+.portrait h1{font-size:100px}
+.portrait .t1 .eb{font-size:30px}
+.portrait .t1 .pill{font-size:26px;padding:26px 70px 23px}
+.portrait .t2{left:64px;top:1010px;width:680px}
+.portrait h2{font-size:88px}
+.portrait .t2 p{font-size:23px}
+.portrait .t2 .pill{font-size:24px;padding:22px 52px 19px}
+@media (max-width:760px){
+  .frame,.frame::after{border-radius:22px}
+  .frame{inset:8px}
+  .logo{top:26px;font-size:20px}.logo svg{width:22px;height:22px}
+  nav{top:30px;gap:18px}
+  nav a{font-size:11px;letter-spacing:.12em}
+  nav a:nth-child(2),nav a:nth-child(3){display:none}
+  .note{bottom:18px;font-size:9px}
+}
+</style>
+</head>
+<body>
+<main class="frame" id="frame">
+  <div class="logo" id="logo">
+    <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.500 0s5 3 7.500 0 4-3 5.500-1"/><path d="M8 22c2-2 4.500-2 7 0s5 2 7 0"/></svg>
+    しおさい荘
+  </div>
+  <nav aria-label="メニュー">
+    <a href="rooms.html">客室<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
+    <a href="food.html">お食事<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
+    <a href="access.html">アクセス<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
+    <a href="reserve.html">ご予約<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
+  </nav>
+
+  <div id="scene">
+    <div class="spr" id="cloud"><svg viewBox="0 0 300 80" width="300" height="80" aria-hidden="true"><path fill="#d4cebd" d="M0 79c14-4 28-4 40-12-3-15 12-28 30-24 8-20 40-30 60-14 18-12 44-4 50 16 12-3 20 2 24 10 22 18 62 20 96 24z"/></svg></div>
+    <div class="spr" id="gulls"><svg viewBox="0 0 160 60" width="160" height="60" fill="none" stroke="#17140f" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M10 30q10-12 20 0q10-12 20 0"/><path d="M80 14q7-9 14 0q7-9 14 0"/><path d="M120 44q6-7 12 0q6-7 12 0"/></svg></div>
+    <svg class="w" id="wBack"></svg>
+    <div class="t1" id="t1">
+      <div class="eb">瀬戸内の小さな島へ</div>
+      <h1>波の音で<br>目覚める宿</h1>
+      <a href="#" class="pill" data-go="1">島へ渡る</a>
+    </div>
+    <div class="spr" id="ferry">
+      <svg viewBox="0 0 240 150" aria-hidden="true">
+        <path class="ink" fill="var(--roof)" d="M146 34h22v26h-22z"/>
+        <path class="ink" fill="var(--paper)" d="M146 34h22v8h-22z"/>
+        <path class="ink" fill="var(--wall)" d="M84 30h56v30H84z"/>
+        <path class="ink" fill="var(--wall)" d="M52 58h132v40H52z"/>
+        <circle class="ink" fill="var(--band)" cx="76" cy="78" r="7"/><circle class="ink" fill="var(--band)" cx="104" cy="78" r="7"/><circle class="ink" fill="var(--band)" cx="132" cy="78" r="7"/><circle class="ink" fill="var(--band)" cx="160" cy="78" r="7"/>
+        <path class="ink" fill="var(--band)" d="M96 38h34v12H96z"/>
+        <path class="ink" fill="none" d="M112 30V8l18 6-18 6"/>
+        <path class="ink" fill="var(--roof)" d="M8 96h224l-26 46H34z"/>
+        <path class="ink" fill="none" d="M20 112h200"/>
+      </svg>
+    </div>
+    <svg class="w" id="wFront"></svg>
+    <div class="spr" id="mound">
+      <svg viewBox="0 0 900 420" aria-hidden="true">
+        <path fill="var(--sand)" d="M0 1400V170c80-60 200-75 330-75h310c100 5 180 95 230 205 20 50 30 90 30 120v980z"/>
+        <path class="ink" fill="none" d="M0 170c80-60 200-75 330-75h310c100 5 180 95 230 205 20 50 30 90 30 120v980"/>
+        <path class="ink" fill="none" d="M120 210l14-16 10 14M200 180l12-14 9 12M700 160l12-14 10 13M760 230l11-13 8 11M420 140h60M520 160h40"/>
+        <path class="ink" fill="none" d="M60 300q40-10 80 0M300 330q50-10 100 0M560 300q40-8 80 0"/>
+      </svg>
+    </div>
+    <div class="spr" id="pine">
+      <svg viewBox="0 0 220 380" aria-hidden="true">
+        <path class="ink" fill="var(--wood)" d="M96 380c-4-110 2-220 26-330l14 4c-18 112-24 222-20 326z"/>
+        <path class="ink" fill="var(--wood)" d="M112 210c-30-14-52-34-66-58l10-6c14 20 34 38 60 50z"/>
+        <path class="ink" fill="var(--leaf2)" d="M14 150c10-26 50-34 74-22 18-10 48-4 54 18-24 12-62 16-90 14-16 0-32-4-38-10z"/>
+        <path class="ink" fill="var(--leaf)" d="M60 96c12-30 56-38 84-24 22-10 56-2 64 24-26 14-70 18-102 14-20-2-38-6-46-14z"/>
+        <path class="ink" fill="var(--leaf)" d="M76 40c10-24 44-32 66-20 18-6 42 2 46 20-20 12-54 14-80 10-14-2-26-4-32-10z"/>
+      </svg>
+    </div>
+    <div class="spr" id="house">
+      <svg viewBox="0 0 360 300" aria-hidden="true">
+        <path class="ink" fill="var(--wall)" d="M46 128h268v168H46z"/>
+        <path class="ink" fill="var(--wood)" d="M150 200h60v96h-60z"/>
+        <path class="ink" fill="var(--paper)" d="M150 200h60v24h-60z"/>
+        <path class="ink" fill="none" d="M170 200v24M190 200v24"/>
+        <path class="ink" fill="var(--band)" d="M72 166h52v44H72zM236 166h52v44h-52z"/>
+        <path class="ink" fill="none" d="M98 166v44M72 188h52M262 166v44M236 188h52"/>
+        <path class="ink" fill="var(--wall)" d="M250 52h28v50h-28z"/>
+        <path class="ink" fill="var(--roof)" d="M180 24L340 138H20z"/>
+        <path class="ink" fill="none" d="M60 120h240M100 92h160M140 64h80"/>      </svg>
+    </div>
+    <div class="spr" id="cat">
+      <svg viewBox="0 0 80 74" aria-hidden="true">
+        <path class="ink" fill="none" d="M58 66c14 2 18-8 14-18"/>
+        <path class="ink" fill="var(--ink)" d="M16 72c-4-18 2-34 18-38h10c14 6 18 22 14 38z"/>
+        <path class="ink" fill="var(--ink)" d="M22 36c-6-6-6-16-2-24l8 6h12l8-6c4 8 4 18-2 24-6 4-18 4-24 0z"/>
+        <circle cx="29" cy="25" r="2.4" fill="var(--paper)"/><circle cx="41" cy="25" r="2.4" fill="var(--paper)"/>
+      </svg>
+    </div>
+    <div class="spr" id="bushL">
+      <svg viewBox="0 0 700 200" aria-hidden="true">
+        <path class="ink" fill="var(--leaf2)" d="M0 200c0-60 30-100 80-100 10-40 60-60 100-36 30-34 90-30 110 10 30-20 80-10 90 30 40-14 90 6 100 40 40-10 80 10 90 56z"/>
+        <path class="ink" fill="none" d="M120 150q20-14 40 0M260 120q24-16 48 0M440 150q20-14 40 0"/>
+      </svg>
+    </div>
+    <div class="spr" id="bushR">
+      <svg viewBox="0 0 300 150" aria-hidden="true">
+        <path class="ink" fill="var(--leaf)" d="M0 150c0-40 20-70 60-70 10-34 54-44 80-18 24-22 70-14 80 18 40-4 70 26 76 70z"/>
+        <path class="ink" fill="none" d="M100 110q18-12 36 0M190 120q16-10 32 0"/>
+      </svg>
+    </div>
+    <div class="t2" id="t2">
+      <h2 id="h2">島の宿<br>しおさい荘</h2>
+      <p id="p2">一日三組だけの、海の見える古民家宿。<br>朝ごはんは、港であがった魚の干物です。</p>
+      <span class="btnw" id="btn2"><i class="tick a"></i><i class="tick b"></i><i class="tick c"></i><a href="reserve.html" class="pill">空室を見る</a></span>
+    </div>
+  </div>
+  <div class="note">Web制作サンプル(架空の宿です)</div>
+  <canvas id="shade" width="64" height="36"></canvas>
+</main>
+<div id="ping"></div><div id="cur"></div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const NS='http://www.w3.org/2000/svg';
+const root=document.documentElement, frame=$('frame'), scene=$('scene');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const clamp=v=>v<0?0:v>1?1:v;
+const mix=(a,b,k)=>a+(b-a)*k;
+const seg=(p,a,b)=>clamp((p-a)/(b-a));
+const io=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+const out=k=>1-Math.pow(1-k,3);
+const back=k=>1+2.4*Math.pow(k-1,3)+1.4*Math.pow(k-1,2);
+const tf=(x,y,r,s)=>`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(r||0).toFixed(3)}deg) scale(${s==null?1:s})`;
+
+// height / width of each drawing
+const RATIO={ferry:150/240,mound:420/900,pine:380/220,house:300/360,cat:74/80,bushL:200/700,bushR:150/300};
+
+const LAY={
+  land:{
+    w:1600,h:900,
+    wave:{y0:748,y1:272,gap0:1,gap1:.6},
+    ferry:{x0:1150,w0:620,x1:1350,w1:150},
+    mound:{x:-120,y:470,w:1000},pine:{x:-60,y:70,w:300},house:{x:262,y:316,w:320},cat:{x:528,y:512,w:70},
+    bushL:{x:40,y:716,w:700},bushR:{x:1370,y:750,w:300}
+  },
+  port:{
+    w:800,h:1500,
+    wave:{y0:1300,y1:430,gap0:1,gap1:.7},
+    ferry:{x0:430,w0:560,x1:640,w1:130},
+    mound:{x:-100,y:560,w:900},pine:{x:-70,y:150,w:300},house:{x:236,y:421,w:290},cat:{x:466,y:600,w:60},
+    bushL:{x:-40,y:1330,w:520},bushR:{x:570,y:1345,w:260}
+  }
+};
+
+const BACK=[
+  {dy:-100,a:20,k:1.5,v:.9,ph:0,fill:'var(--band)'},
+  {dy:-52,a:23,k:1.9,v:1.15,ph:1.7,fill:'var(--paper)'}
+];
+const FRONT=[
+  {dy:0,a:25,k:1.7,v:1.3,ph:3.1,fill:'var(--band2)'},
+  {dy:26,a:18,k:2.4,v:1,ph:4.4,span:[.06,.44]},
+  {dy:48,a:22,k:1.45,v:1.4,ph:.6,fill:'var(--paper)'},
+  {dy:76,a:15,k:2.1,v:1.2,ph:5.1,span:[.52,.97]},
+  {dy:104,a:24,k:1.8,v:1.25,ph:2.2,fill:'var(--paper)'},
+  {dy:130,a:14,k:2.7,v:1,ph:1.1,span:[0,.62]},
+  {dy:158,a:20,k:1.6,v:1.1,ph:3.8}
+];
+
+function mkPaths(svg,layers){
+  return layers.map(l=>{const p=document.createElementNS(NS,'path');p.style.fill=l.fill||'none';svg.appendChild(p);return p;});
+}
+const wBack=$('wBack'), wFront=$('wFront');
+const pBack=mkPaths(wBack,BACK), pFront=mkPaths(wFront,FRONT);
+
+let L=LAY.land, S=1, DX=0, DY=0;
+function yAt(l,x,t,p){
+  const W=L.wave;
+  const base=mix(W.y0,W.y1,p)+l.dy*mix(W.gap0,W.gap1,p);
+  const a=l.a*mix(1,.72,p);
+  const f=2*Math.PI/1100*l.k*(1-.35*p);
+  return base+a*Math.sin(f*x+t*l.v+l.ph)+a*.45*Math.sin(f*2.3*x-t*l.v*.7+l.ph*1.7);
+}
+function drawWaves(paths,layers,t,p){
+  const x0=-DX-20, x1=L.w+DX+20, yb=L.h+DY+40;
+  layers.forEach((l,i)=>{
+    let a=x0,b=x1;
+    if(l.span){a=mix(x0,x1,l.span[0]);b=mix(x0,x1,l.span[1]);}
+    let d='';
+    for(let x=a;;x+=22){
+      if(x>b)x=b;
+      d+=(d?'L':'M')+x.toFixed(1)+' '+yAt(l,x,t,p).toFixed(1);
+      if(x>=b)break;
+    }
+    if(l.fill)d+=`L${b.toFixed(1)} ${yb}L${a.toFixed(1)} ${yb}Z`;
+    paths[i].setAttribute('d',d);
+  });
+}
+
+const el={};
+['cloud','gulls','t1','ferry','mound','pine','house','cat','bushL','bushR','t2','h2','p2','btn2','logo'].forEach(id=>el[id]=$(id));
+const SPR=['mound','pine','house','cat','bushL','bushR'];
+
+function resize(){
+  const W=frame.clientWidth, H=frame.clientHeight, portrait=H>W;
+  L=portrait?LAY.port:LAY.land;
+  root.classList.toggle('portrait',portrait);
+  S=Math.min(W/L.w,H/L.h);
+  const DW=W/S, DH=H/S;
+  DX=(DW-L.w)/2; DY=(DH-L.h)/2;
+  scene.style.width=L.w+'px'; scene.style.height=L.h+'px';
+  scene.style.transform=`translate(${DX*S}px,${DY*S}px) scale(${S})`;
+  [wBack,wFront].forEach(s=>{s.setAttribute('width',L.w);s.setAttribute('height',L.h);});
+  SPR.forEach(id=>{
+    const c=L[id], e=el[id];
+    e.style.left=c.x+'px'; e.style.top=c.y+'px';
+    e.style.width=c.w+'px'; e.style.height=(c.w*RATIO[id])+'px';
+  });
+}
+
+// transition state
+let p=0, pFrom=0, pTo=0, pT0=null;
+const DUR=reduced?1:2100;
+function go(to){
+  if(pTo===to&&pT0===null&&p===to)return;
+  if(pTo===to&&pT0!==null)return;
+  pFrom=p; pTo=to; pT0=performance.now();
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a');
+  if(a&&a.getAttribute('href')==='#')e.preventDefault();
+  const g=e.target.closest('[data-go]');
+  if(g)go(+g.dataset.go);
+});
+let wheelLock=0;
+addEventListener('wheel',e=>{
+  const n=performance.now(); if(n<wheelLock)return;
+  if(e.deltaY>8){go(1);wheelLock=n+1200;}
+  else if(e.deltaY<-8){go(0);wheelLock=n+1200;}
+},{passive:true});
+let ty=null;
+addEventListener('touchstart',e=>{ty=e.touches[0].clientY;},{passive:true});
+addEventListener('touchend',e=>{
+  if(ty==null)return;
+  const d=ty-e.changedTouches[0].clientY; ty=null;
+  if(d>40)go(1); else if(d<-40)go(0);
+},{passive:true});
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ')go(1);
+  if(e.key==='ArrowUp'||e.key==='PageUp')go(0);
+});
+
+// palm-free shade: soft pine branch shadows on a tiny canvas
+const shade=$('shade');
+(function(){
+  const c=shade.getContext('2d');
+  c.scale(.5,.5);
+  c.fillStyle='#fff'; c.fillRect(0,0,128,72);
+  c.strokeStyle='rgba(120,114,96,.9)'; c.lineCap='round';
+  [[-10,26,38,-8,8],[-8,46,58,-2,5],[-10,62,74,6,4],[14,78,96,16,4],[40,82,118,22,3],[78,80,140,34,5],[-12,74,22,56,6]].forEach(s=>{
+    c.lineWidth=s[4]; c.beginPath(); c.moveTo(s[0],s[1]);
+    c.quadraticCurveTo((s[0]+s[2])/2+6,(s[1]+s[3])/2+8,s[2],s[3]); c.stroke();
+  });
+})();
+
+// cursor
+const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+const cur=$('cur'), ping=$('ping');
+let mx=-100,my=-100,cx=-100,cy=-100,down=false,overLink=false,pingT=-1e9,px=0,py=0,last=0;
+if(fine){
+  root.classList.add('fine');
+  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;overLink=!!e.target.closest('a');if(cx<-50){cx=mx;cy=my;}});
+  addEventListener('pointerdown',e=>{down=true;px=e.clientX;py=e.clientY;pingT=performance.now();});
+  addEventListener('pointerup',()=>{down=false;});
+}
+
+const t0=performance.now();
+function setT(e,v){e.style.transform=v;}
+function render(now){
+  const t=reduced?0:(now-t0)/1000;
+  if(pT0!==null){
+    const k=seg(now,pT0,pT0+DUR);
+    p=mix(pFrom,pTo,io(k));
+    if(k>=1){p=pTo;pT0=null;}
+  }
+
+  drawWaves(pBack,BACK,t,p);
+  drawWaves(pFront,FRONT,t,p);
+
+  // ferry rides the main swell
+  const c=L.ferry, sw=mix(c.w0,c.w1,p), sx=mix(c.x0,c.x1,p), sh=sw*RATIO.ferry;
+  const wy=yAt(FRONT[0],sx,t,p);
+  const slope=(yAt(FRONT[0],sx+90,t,p)-yAt(FRONT[0],sx-90,t,p))/180;
+  const f=el.ferry.style;
+  f.width=sw+'px'; f.height=sh+'px'; f.left=(sx-sw/2)+'px'; f.top=(wy+sh*.16-sh)+'px';
+  setT(el.ferry,`rotate(${(Math.atan(slope)*57.3*.75).toFixed(3)}deg)`);
+
+  // sky
+  const span=L.w+700;
+  const cl=((L.w*.72-t*16)%span+span)%span-400;
+  el.cloud.style.left=cl+'px'; el.cloud.style.top=(root.classList.contains('portrait')?110:150)+'px';
+  el.cloud.style.opacity=1-seg(p,.3,.7);
+  const gl=((L.w*.3+t*22)%span+span)%span-300;
+  el.gulls.style.left=gl+'px'; el.gulls.style.top=(root.classList.contains('portrait')?680:210)+Math.sin(t*.9)*8+'px';
+  el.gulls.style.opacity=1-seg(p,.2,.5);
+
+  // first scene copy
+  const intro=reduced?1:out(seg(now,t0+200,t0+1100));
+  el.t1.style.opacity=intro*(1-seg(p,.62,.7));
+  setT(el.t1,tf(0,(1-intro)*26-p*40));
+  el.t1.style.pointerEvents=p>.1?'none':'';
+  el.logo.style.opacity=1-seg(p,.12,.3);
+
+  // island slides in from the left
+  const e=io(seg(p,.04,.92));
+  setT(el.mound,tf(mix(-L.mound.w-80,0,e),mix(170,0,e)));
+  setT(el.pine,tf(mix(-L.pine.w-80,0,e),mix(-170,0,e),Math.sin(t*.8)*.7));
+  setT(el.house,tf(mix(-L.house.w-420,0,e),mix(120,0,e)));
+  setT(el.cat,tf(mix(-L.cat.w-640,0,e),mix(120,0,e),Math.sin(t*1.1)*1.2*p));
+
+  const b=out(seg(p,.5,1));
+  setT(el.bushL,tf(0,mix(340,0,b)));
+  setT(el.bushR,tf(0,mix(300,0,b)));
+
+  const hk=seg(p,.42,.82);
+  el.h2.style.opacity=hk*hk; setT(el.h2,tf(0,mix(70,0,out(hk))));
+  const pk=seg(p,.76,.92);
+  el.p2.style.opacity=pk; setT(el.p2,tf(0,mix(16,0,pk)));
+  const bk=seg(p,.86,1);
+  el.btn2.style.opacity=bk; setT(el.btn2,tf(0,0,0,mix(.7,1,back(bk))));
+  el.t2.style.pointerEvents=p>.9?'':'none';
+
+  // drifting shade
+  setT(shade,`translate(${(Math.sin(t*.35)*2.2).toFixed(3)}%,${(Math.cos(t*.27)*1.6).toFixed(3)}%) rotate(${(Math.sin(t*.22)*.8).toFixed(3)}deg)`);
+
+  // cursor
+  if(fine){
+    const dt=Math.min(.05,(now-(last||now))/1000);
+    const k=1-Math.exp(-dt*22);
+    cx+=(mx-cx)*k; cy+=(my-cy)*k;
+    const s=down?.7:overLink?1.35:1;
+    cur.style.transform=`translate(${cx.toFixed(1)}px,${cy.toFixed(1)}px) scale(${s})`;
+    const pk2=seg(now,pingT,pingT+650);
+    ping.style.transform=`translate(${px}px,${py}px) scale(${1+out(pk2)*1.9})`;
+    ping.style.opacity=pk2>0&&pk2<1?1-pk2:0;
+  }
+  last=now;
+}
+
+resize();
+addEventListener('resize',resize);
+(function loop(n){render(n);requestAnimationFrame(loop);})(t0);
+})();
+</script>
+</body>
+</html>
