@@ -3,106 +3,93 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>しおさい荘 | 波の音で目覚める島の宿</title>
-<meta name="description" content="瀬戸内の小さな島にある、一日三組だけの古民家宿。(Web制作のサンプルとして作った架空の宿です)">
+<title>しおさい荘 | 瀬戸内・しおさい島の宿</title>
+<meta name="description" content="瀬戸内・しおさい島の宿。客室3室、1泊2食16,500円から。(Web制作のサンプルです。店名・住所・料金は架空です)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@500;700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 <style>
-:root{--paper:#e9e3d2;--ink:#221d16;--line:#17140f;--band:#cfd6cf;--band2:#d8ddd4;--sand:#dcc89c;--roof:#b4533b;--wall:#f1ead8;--leaf:#6f8a5e;--leaf2:#5d7650;--wood:#7a593b}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--paper);overflow:hidden;color:var(--ink);-webkit-font-smoothing:antialiased}
-html.fine,html.fine *{cursor:none}
-a{color:inherit;text-decoration:none}
-
-.frame{position:fixed;inset:14px;border-radius:34px;overflow:hidden;background:var(--paper);isolation:isolate}
+/* ヒーロー(スクロール連動) */
+.hd{position:fixed;left:0;right:0;top:0;background:transparent;border-bottom-color:transparent;padding-top:8px;transition:background .25s,border-color .25s}
+.hd.solid{background:var(--paper);border-bottom-color:var(--line)}
+.hero{position:relative;height:200vh}
+.stick{position:sticky;top:0;height:100vh;overflow:hidden}
+.frame{position:absolute;inset:14px;border-radius:34px;overflow:hidden;background:var(--paper);isolation:isolate}
 .frame::after{content:"";position:absolute;inset:0;border:6px solid var(--line);border-radius:34px;pointer-events:none;z-index:30}
 #shade{position:absolute;left:-12%;top:-12%;width:124%;height:124%;mix-blend-mode:multiply;opacity:.2;pointer-events:none;z-index:25;will-change:transform}
+html.fine .stick,html.fine .stick *{cursor:none}
 
 #scene{position:absolute;left:0;top:0;transform-origin:0 0}
 #scene>*{position:absolute}
 svg.w{left:0;top:0;overflow:visible;pointer-events:none}
 svg.w path{stroke:var(--line);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
 .spr{will-change:transform}
-.spr svg{display:block;width:100%;height:100%;overflow:visible}
-.ink{stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.spr svg{display:block;width:100%;height:100%;max-width:none;overflow:visible}
 #ferry{transform-origin:50% 100%}
 #pine{transform-origin:45% 100%}
 #cat{transform-origin:50% 100%}
 
-/* copy */
-.t1{left:150px;top:282px;width:680px;white-space:nowrap}
-.t1 .eb{font:600 26px/1 "Shippori Mincho B1",serif;letter-spacing:.32em}
-h1,h2{font-family:"Shippori Mincho B1",serif;font-weight:800;letter-spacing:-.04em}
-h1{font-size:92px;line-height:1.08;margin-top:26px}
-.pill{display:inline-block;position:relative;font:700 19px/1 "Zen Maru Gothic",sans-serif;letter-spacing:.12em;
-  border:3px solid var(--line);border-radius:999px;background:#efe9da;box-shadow:0 7px 0 -1px var(--paper),0 7px 0 2px var(--line);transition:transform .25s,box-shadow .25s}
-.pill:hover{transform:translateY(3px);box-shadow:0 4px 0 -1px var(--paper),0 4px 0 2px var(--line)}
-.t1 .pill{margin-top:40px;padding:20px 58px 18px}
-.t2{left:1000px;top:452px;width:540px}
-h2{font-size:74px;line-height:1.1}
-.t2 p{margin-top:22px;font:700 16px/1.95 "Zen Kaku Gothic New",sans-serif;letter-spacing:.08em}
+.t1{left:150px;top:250px;width:760px;white-space:nowrap}
+.t1 h1{font-size:150px;line-height:1.05;letter-spacing:-.04em}
+.t1 p{margin-top:22px;font:700 28px/1.3 "Zen Kaku Gothic New",sans-serif;letter-spacing:.12em}
+.t2{left:990px;top:420px;width:560px}
+.t2 h2{font-size:60px;line-height:1.1;letter-spacing:-.04em;margin-bottom:20px}
+.facts{background:var(--paper2);border:3px solid var(--line);border-radius:18px;overflow:hidden}
+.facts li{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:14px;padding:13px 20px;border-bottom:2px solid var(--line);font:700 21px/1.2 "Zen Kaku Gothic New",sans-serif}
+.facts li:last-child{border-bottom:0}
+.facts [data-ico] svg{width:38px;height:38px}
+.facts b{font:800 28px/1 "Shippori Mincho B1",serif;white-space:nowrap}
 .btnw{display:inline-block;position:relative;margin-top:30px}
-.t2 .pill{font-size:17px;padding:15px 38px 13px}
+.btnw .pill{min-height:56px;padding:0 44px;font-size:19px}
 .tick{position:absolute;top:-15px;width:22px;height:4px;border-radius:2px;background:var(--line)}
 .tick.a{left:-30px;transform:rotate(24deg)}.tick.b{left:-16px;top:-23px;width:13px;transform:rotate(58deg)}.tick.c{right:-30px;transform:rotate(-30deg)}
 
-/* chrome */
-.logo{position:absolute;left:6.6%;top:54px;z-index:20;display:flex;align-items:center;gap:10px;font:800 28px/1 "Shippori Mincho B1",serif;letter-spacing:.02em}
-.logo svg{width:30px;height:30px}
-nav{position:absolute;right:5.4%;top:60px;z-index:20;display:flex;gap:clamp(30px,5.6vw,92px)}
-nav a{position:relative;font:700 14px/1 "Zen Kaku Gothic New",sans-serif;letter-spacing:.2em;padding:6px 0}
-nav a svg{position:absolute;left:100%;top:-6px;margin-left:6px;width:20px;height:20px;opacity:0;transform:translateY(-10px) rotate(-30deg);transform-origin:50% 0;transition:opacity .2s,transform .55s cubic-bezier(.3,1.9,.5,1)}
-nav a:hover svg{opacity:1;transform:none}
-.note{position:absolute;right:5.4%;bottom:34px;z-index:20;font:500 11px/1 "Zen Kaku Gothic New",sans-serif;letter-spacing:.12em;opacity:.7}
+.hint{position:absolute;left:50%;bottom:34px;z-index:20;width:30px;height:44px;margin-left:-15px;pointer-events:none}
+.hint svg{width:100%;height:100%;overflow:visible}
+@media (prefers-reduced-motion:no-preference){.hint svg{animation:bob 1.6s ease-in-out infinite}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}}
 
-/* cursor */
 #cur,#ping{position:fixed;left:0;top:0;z-index:50;pointer-events:none;border-radius:50%;display:none}
 html.fine #cur,html.fine #ping{display:block}
-#cur{width:var(--ring,40px);height:var(--ring,40px);margin:calc(var(--ring,40px)/-2);border:5px solid var(--line)}
-#ping{width:var(--ring,40px);height:var(--ring,40px);margin:calc(var(--ring,40px)/-2);border:1.5px solid var(--line);opacity:0}
+#cur{width:40px;height:40px;margin:-20px;border:5px solid var(--line);opacity:0}
+#ping{width:40px;height:40px;margin:-20px;border:1.5px solid var(--line);opacity:0}
 
-.portrait .t1{left:60px;top:200px;width:680px}
+.portrait .t1{left:56px;top:210px;width:700px}
+.portrait .t1 h1{font-size:142px}
+.portrait .t1 p{font-size:34px}
 .portrait #shade{opacity:.14}
-.portrait h1{font-size:100px}
-.portrait .t1 .eb{font-size:30px}
-.portrait .t1 .pill{font-size:26px;padding:26px 70px 23px}
-.portrait .t2{left:64px;top:1010px;width:680px}
-.portrait h2{font-size:88px}
-.portrait .t2 p{font-size:23px}
-.portrait .t2 .pill{font-size:24px;padding:22px 52px 19px}
+.portrait .t2{left:56px;top:900px;width:690px}
+.portrait .t2 h2{display:none}
+.portrait .facts li{grid-template-columns:52px 1fr auto;gap:16px;padding:20px 24px;font-size:33px}
+.portrait .facts [data-ico] svg{width:50px;height:50px}
+.portrait .facts b{font-size:42px}
+.portrait .btnw{margin-top:44px}
+.portrait .btnw .pill{min-height:104px;padding:0 90px;font-size:38px;border-width:5px;box-shadow:0 9px 0 var(--line)}
+.portrait .tick{height:6px}
 @media (max-width:760px){
   .frame,.frame::after{border-radius:22px}
   .frame{inset:8px}
-  .logo{top:26px;font-size:20px}.logo svg{width:22px;height:22px}
-  nav{top:30px;gap:18px}
-  nav a{font-size:11px;letter-spacing:.12em}
-  nav a:nth-child(2),nav a:nth-child(3){display:none}
-  .note{bottom:18px;font-size:9px}
+  .hint{bottom:24px}
 }
 </style>
 </head>
 <body>
-<main class="frame" id="frame">
-  <div class="logo" id="logo">
-    <svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.500 0s5 3 7.500 0 4-3 5.500-1"/><path d="M8 22c2-2 4.500-2 7 0s5 2 7 0"/></svg>
-    しおさい荘
-  </div>
-  <nav aria-label="メニュー">
-    <a href="rooms.html">客室<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
-    <a href="food.html">お食事<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
-    <a href="access.html">アクセス<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
-    <a href="reserve.html">ご予約<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M2 12c2.500-3 5-3 8 0s5.500 3 8 0"/></svg></a>
-  </nav>
+<header class="hd" id="hd">
+  <a class="logo" href="index.html"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.5 0s5 3 7.5 0 4-3 5.5-1"/><path d="M8 22c2-2 4.5-2 7 0s5 2 7 0"/></svg>しおさい荘</a>
+  <nav class="gnav" aria-label="メニュー"><a class="t" href="rooms.html">客室</a><a class="t" href="#access">アクセス</a><a class="pill red sm" href="reserve.html">予約する</a></nav>
+</header>
 
+<main>
+<div class="hero" id="hero">
+ <div class="stick" id="stick">
+  <div class="frame" id="frame">
   <div id="scene">
     <div class="spr" id="cloud"><svg viewBox="0 0 300 80" width="300" height="80" aria-hidden="true"><path fill="#d4cebd" d="M0 79c14-4 28-4 40-12-3-15 12-28 30-24 8-20 40-30 60-14 18-12 44-4 50 16 12-3 20 2 24 10 22 18 62 20 96 24z"/></svg></div>
     <div class="spr" id="gulls"><svg viewBox="0 0 160 60" width="160" height="60" fill="none" stroke="#17140f" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M10 30q10-12 20 0q10-12 20 0"/><path d="M80 14q7-9 14 0q7-9 14 0"/><path d="M120 44q6-7 12 0q6-7 12 0"/></svg></div>
-    <svg class="w" id="wBack"></svg>
+    <svg class="w" id="wBack" aria-hidden="true"></svg>
     <div class="t1" id="t1">
-      <div class="eb">瀬戸内の小さな島へ</div>
-      <h1>波の音で<br>目覚める宿</h1>
-      <a href="#" class="pill" data-go="1">島へ渡る</a>
+      <h1>しおさい荘</h1>
+      <p>瀬戸内・しおさい島 / 1日3組</p>
     </div>
     <div class="spr" id="ferry">
       <svg viewBox="0 0 240 150" aria-hidden="true">
@@ -117,7 +104,7 @@ html.fine #cur,html.fine #ping{display:block}
         <path class="ink" fill="none" d="M20 112h200"/>
       </svg>
     </div>
-    <svg class="w" id="wFront"></svg>
+    <svg class="w" id="wFront" aria-hidden="true"></svg>
     <div class="spr" id="mound">
       <svg viewBox="0 0 900 420" aria-hidden="true">
         <path fill="var(--sand)" d="M0 1400V170c80-60 200-75 330-75h310c100 5 180 95 230 205 20 50 30 90 30 120v980z"/>
@@ -145,7 +132,8 @@ html.fine #cur,html.fine #ping{display:block}
         <path class="ink" fill="none" d="M98 166v44M72 188h52M262 166v44M236 188h52"/>
         <path class="ink" fill="var(--wall)" d="M250 52h28v50h-28z"/>
         <path class="ink" fill="var(--roof)" d="M180 24L340 138H20z"/>
-        <path class="ink" fill="none" d="M60 120h240M100 92h160M140 64h80"/>      </svg>
+        <path class="ink" fill="none" d="M60 120h240M100 92h160M140 64h80"/>
+      </svg>
     </div>
     <div class="spr" id="cat">
       <svg viewBox="0 0 80 74" aria-hidden="true">
@@ -168,21 +156,157 @@ html.fine #cur,html.fine #ping{display:block}
       </svg>
     </div>
     <div class="t2" id="t2">
-      <h2 id="h2">島の宿<br>しおさい荘</h2>
-      <p id="p2">一日三組だけの、海の見える古民家宿。<br>朝ごはんは、港であがった魚の干物です。</p>
-      <span class="btnw" id="btn2"><i class="tick a"></i><i class="tick b"></i><i class="tick c"></i><a href="reserve.html" class="pill">空室を見る</a></span>
+      <h2 id="h2">しおさい荘</h2>
+      <ul class="facts" id="p2">
+        <li><span data-ico="yen"></span><span>1泊2食</span><b>16,500円〜</b></li>
+        <li><span data-ico="boat"></span><span>みどり港からフェリー</span><b>25分</b></li>
+        <li><span data-ico="door"></span><span>客室</span><b>3室</b></li>
+      </ul>
+      <span class="btnw" id="btn2"><i class="tick a"></i><i class="tick b"></i><i class="tick c"></i><a href="reserve.html" class="pill red">空室を見る</a></span>
     </div>
   </div>
-  <div class="note">Web制作サンプル(架空の宿です)</div>
-  <canvas id="shade" width="64" height="36"></canvas>
+  <div class="hint" id="hint" aria-hidden="true"><svg viewBox="0 0 30 44" fill="none" stroke="#17140f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v28M5 24l10 11 10-11"/></svg></div>
+  <canvas id="shade" width="64" height="36" aria-hidden="true"></canvas>
+  </div>
+ </div>
+</div>
+
+<section class="sec" id="rooms">
+  <div class="wrap">
+    <h2 class="sec-h">客室</h2>
+    <table class="cmp">
+      <caption class="sr">客室の比較</caption>
+      <thead><tr><td></td>
+        <th scope="col"><span class="win" data-win="nagi"></span>凪</th>
+        <th scope="col"><span class="win" data-win="shiosai"></span>潮騒</th>
+        <th scope="col"><span class="win" data-win="matsukaze"></span>松風</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">広さ</th><td>8畳</td><td>12畳+縁側</td><td>10畳(離れ)</td></tr>
+        <tr><th scope="row">定員</th><td>1〜2名</td><td>2〜4名</td><td>2〜3名</td></tr>
+        <tr><th scope="row">眺め</th><td>海</td><td>海・夕日</td><td>庭・松</td></tr>
+        <tr><th scope="row">1泊2食/1名</th><td class="pr">16,500円〜</td><td class="pr">19,800円〜</td><td class="pr">22,000円〜</td></tr>
+        <tr class="act"><th scope="row" class="sr">予約</th>
+          <td><a class="pill red sm" href="reserve.html?room=nagi">この部屋で予約</a></td>
+          <td><a class="pill red sm" href="reserve.html?room=shiosai">この部屋で予約</a></td>
+          <td><a class="pill red sm" href="reserve.html?room=matsukaze">この部屋で予約</a></td></tr>
+      </tbody>
+    </table>
+
+    <div class="cmp-cards">
+      <article class="rc card">
+        <div class="rc-h"><span class="win" data-win="nagi"></span><h3>凪</h3></div>
+        <dl><div><dt>広さ</dt><dd>8畳</dd></div><div><dt>定員</dt><dd>1〜2名</dd></div><div><dt>眺め</dt><dd>海</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">16,500円〜</dd></div></dl>
+        <a class="pill red sm" href="reserve.html?room=nagi">この部屋で予約</a>
+      </article>
+      <article class="rc card">
+        <div class="rc-h"><span class="win" data-win="shiosai"></span><h3>潮騒</h3></div>
+        <dl><div><dt>広さ</dt><dd>12畳+縁側</dd></div><div><dt>定員</dt><dd>2〜4名</dd></div><div><dt>眺め</dt><dd>海・夕日</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">19,800円〜</dd></div></dl>
+        <a class="pill red sm" href="reserve.html?room=shiosai">この部屋で予約</a>
+      </article>
+      <article class="rc card">
+        <div class="rc-h"><span class="win" data-win="matsukaze"></span><h3>松風</h3></div>
+        <dl><div><dt>広さ</dt><dd>10畳(離れ)</dd></div><div><dt>定員</dt><dd>2〜3名</dd></div><div><dt>眺め</dt><dd>庭・松</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">22,000円〜</dd></div></dl>
+        <a class="pill red sm" href="reserve.html?room=matsukaze">この部屋で予約</a>
+      </article>
+    </div>
+    <p class="more"><a href="rooms.html">客室の詳しい写真と設備 →</a></p>
+  </div>
+</section>
+
+<section class="sec alt" id="food">
+  <div class="wrap meal">
+    <div class="meal-art"><svg viewBox="0 0 420 320" aria-hidden="true">
+<ellipse class="ink" fill="var(--wall)" cx="210" cy="250" rx="190" ry="46"/>
+<path class="ink" fill="var(--band)" d="M72 236c40 34 236 34 276 0-10-34-266-34-276 0z"/>
+<path class="ink" fill="var(--sand)" d="M110 214c40-36 140-46 200-10-20 24-64 34-108 32-40-2-74-8-92-22z"/>
+<path class="ink" fill="none" d="M300 206l40-24-6 30 34 2-38 16"/>
+<path class="ink3" fill="none" d="M150 204c10 10 26 10 36 0M196 196c10 10 26 10 36 0M242 202c10 10 26 10 36 0"/>
+<circle cx="140" cy="210" r="5" fill="var(--line)"/>
+<path class="ink" fill="var(--roof)" d="M300 70c0 40 70 40 70 0z"/><path class="ink" fill="var(--wall)" d="M296 70h78v8h-78z"/>
+<path class="ink3" fill="none" d="M320 56c-4-10 4-18 0-28M346 56c-4-10 4-18 0-28"/>
+<path class="ink" fill="var(--wall)" d="M40 70c0 44 90 44 90 0z"/><path class="ink" fill="var(--wall)" d="M36 66h98v8H36z"/>
+<path class="ink3" fill="none" d="M150 40l60 90M170 36l50 94"/></svg></div>
+    <div>
+      <h2 class="sec-h">食事</h2>
+      <dl class="times">
+        <div><dt>夕食</dt><dd><span class="chip">18:00</span><span class="chip">19:00</span></dd></div>
+        <div><dt>朝食</dt><dd><span class="chip">8:00</span></dd></div>
+      </dl>
+      <h3 class="menu-h">夕食の品書き</h3>
+      <ul class="menu">
+        <li>島ひじきの白和え</li>
+        <li>地魚の刺身三種</li>
+        <li>鰆の味噌漬け焼き</li>
+        <li>鯛めし</li>
+        <li>島みかんのゼリー</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="access">
+  <div class="wrap">
+    <h2 class="sec-h">アクセス</h2>
+    <div class="acc-top">
+      <div class="acc-map"><svg viewBox="0 0 720 460" aria-label="みどり港としおさい島の位置を示す地図">
+<path fill="var(--band)" d="M0 0h720v460H0z"/>
+<path class="ink3" fill="none" d="M40 60c30-8 50 8 80 0M560 400c30-8 50 8 80 0M420 60c30-8 50 8 80 0M80 410c30-8 50 8 80 0"/>
+<path class="ink" fill="var(--sand)" d="M-10 300c60-10 110-40 150-90 30-40 80-60 120-40 30 16 30 60 0 90-40 40-60 90-80 130H-10z"/>
+<path class="ink" fill="var(--sand)" d="M430 180c40-60 140-80 200-40 50 34 60 110 20 160-40 50-130 60-190 30-50-26-60-100-30-150z"/>
+<path class="ink" fill="var(--leaf)" d="M520 170c10-24 40-30 56-14 20-8 40 8 34 28-30 10-60 10-90-14z"/>
+<path class="ink" fill="var(--leaf)" d="M30 380c10-24 40-30 56-14 20-8 40 8 34 28-30 10-60 10-90-14z"/>
+<path stroke="var(--line)" stroke-width="4" stroke-dasharray="4 14" stroke-linecap="round" fill="none" d="M240 250c70-40 150-50 220-20"/>
+<path class="ink" fill="var(--wall)" d="M210 236h40v26h-40z"/><path class="ink" fill="var(--wall)" d="M452 222h40v26h-40z"/>
+<path class="ink" fill="var(--roof)" d="M560 230c0-24 36-24 36 0 0 18-18 36-18 36s-18-18-18-36z"/><circle cx="578" cy="230" r="6" fill="var(--paper)"/>
+<path class="ink3" fill="var(--roof)" d="M330 214h44l-6 10h-32z"/><path class="ink3" fill="var(--wall)" d="M340 202h22v12h-22z"/>
+<path class="ink3" fill="none" d="M492 236c20 0 40-2 66-4"/>
+<g font-family="Zen Kaku Gothic New" font-weight="700" font-size="20" fill="#17140f" stroke="var(--band)" stroke-width="6" paint-order="stroke" stroke-linejoin="round">
+<text x="190" y="290">みどり港</text>
+<text x="408" y="284">しおさい島港</text>
+<text x="500" y="326">しおさい荘</text>
+<text x="276" y="178">フェリー 約25分</text></g></svg></div>
+      <div>
+        <div class="route-w">
+          <ol class="route" aria-label="ルート">
+            <li class="stop"><i></i>みどり駅</li>
+            <li class="leg"><span>バス15分</span></li>
+            <li class="stop"><i></i>みどり港</li>
+            <li class="leg"><span>フェリー25分</span></li>
+            <li class="stop"><i></i>しおさい島港</li>
+            <li class="leg"><span>送迎5分</span></li>
+            <li class="stop end"><i></i>しおさい荘</li>
+          </ol>
+        </div>
+        <div class="ferry-row">
+          <b>みどり港 発</b>
+          <span class="chip">7:10</span><span class="chip">10:30</span><span class="chip">13:40</span><span class="chip fin">16:20<small>最終</small></span><span class="chip">18:30</span>
+        </div>
+        <p class="legend1">最終 = チェックインに間に合う最終便</p>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
+
+<footer class="ft">
+  <div class="wrap ft-in">
+    <a class="logo" href="index.html"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.5 0s5 3 7.5 0 4-3 5.5-1"/><path d="M8 22c2-2 4.5-2 7 0s5 2 7 0"/></svg>しおさい荘</a>
+    <ul class="ft-l">
+      <li>〒000-0000 架空県しおさい島 1-2</li>
+      <li>TEL 000-000-0000(9:00〜18:00)</li>
+      <li>チェックイン 15:00〜18:00 / チェックアウト 10:00</li>
+    </ul>
+  </div>
+  <p class="note">Web制作サンプル。店名・住所・料金は架空です。</p>
+</footer>
 <div id="ping"></div><div id="cur"></div>
 
+<script src="site.js"></script>
 <script>
 (function(){
 const $=id=>document.getElementById(id);
 const NS='http://www.w3.org/2000/svg';
-const root=document.documentElement, frame=$('frame'), scene=$('scene');
+const root=document.documentElement, frame=$('frame'), scene=$('scene'), hero=$('hero'), stick=$('stick'), hd=$('hd');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const clamp=v=>v<0?0:v>1?1:v;
@@ -193,7 +317,6 @@ const out=k=>1-Math.pow(1-k,3);
 const back=k=>1+2.4*Math.pow(k-1,3)+1.4*Math.pow(k-1,2);
 const tf=(x,y,r,s)=>`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(r||0).toFixed(3)}deg) scale(${s==null?1:s})`;
 
-// height / width of each drawing
 const RATIO={ferry:150/240,mound:420/900,pine:380/220,house:300/360,cat:74/80,bushL:200/700,bushR:150/300};
 
 const LAY={
@@ -258,7 +381,7 @@ function drawWaves(paths,layers,t,p){
 }
 
 const el={};
-['cloud','gulls','t1','ferry','mound','pine','house','cat','bushL','bushR','t2','h2','p2','btn2','logo'].forEach(id=>el[id]=$(id));
+['cloud','gulls','t1','ferry','mound','pine','house','cat','bushL','bushR','t2','h2','p2','btn2','hint'].forEach(id=>el[id]=$(id));
 const SPR=['mound','pine','house','cat','bushL','bushR'];
 
 function resize(){
@@ -278,39 +401,14 @@ function resize(){
   });
 }
 
-// transition state
-let p=0, pFrom=0, pTo=0, pT0=null;
-const DUR=reduced?1:2100;
-function go(to){
-  if(pTo===to&&pT0===null&&p===to)return;
-  if(pTo===to&&pT0!==null)return;
-  pFrom=p; pTo=to; pT0=performance.now();
+// scroll position -> p (0..1)
+function scrollP(){
+  const r=hero.getBoundingClientRect();
+  const range=Math.max(1,r.height-stick.offsetHeight);
+  return clamp(-r.top/range);
 }
-document.addEventListener('click',e=>{
-  const a=e.target.closest('a');
-  if(a&&a.getAttribute('href')==='#')e.preventDefault();
-  const g=e.target.closest('[data-go]');
-  if(g)go(+g.dataset.go);
-});
-let wheelLock=0;
-addEventListener('wheel',e=>{
-  const n=performance.now(); if(n<wheelLock)return;
-  if(e.deltaY>8){go(1);wheelLock=n+1200;}
-  else if(e.deltaY<-8){go(0);wheelLock=n+1200;}
-},{passive:true});
-let ty=null;
-addEventListener('touchstart',e=>{ty=e.touches[0].clientY;},{passive:true});
-addEventListener('touchend',e=>{
-  if(ty==null)return;
-  const d=ty-e.changedTouches[0].clientY; ty=null;
-  if(d>40)go(1); else if(d<-40)go(0);
-},{passive:true});
-addEventListener('keydown',e=>{
-  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ')go(1);
-  if(e.key==='ArrowUp'||e.key==='PageUp')go(0);
-});
 
-// palm-free shade: soft pine branch shadows on a tiny canvas
+// soft pine branch shadows on a tiny canvas
 const shade=$('shade');
 (function(){
   const c=shade.getContext('2d');
@@ -323,27 +421,29 @@ const shade=$('shade');
   });
 })();
 
-// cursor
+// ring cursor (hero only)
 const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 const cur=$('cur'), ping=$('ping');
-let mx=-100,my=-100,cx=-100,cy=-100,down=false,overLink=false,pingT=-1e9,px=0,py=0,last=0;
+let mx=-100,my=-100,cx=-100,cy=-100,down=false,overLink=false,inHero=false,pingT=-1e9,px=0,py=0,last=0;
 if(fine){
   root.classList.add('fine');
-  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;overLink=!!e.target.closest('a');if(cx<-50){cx=mx;cy=my;}});
-  addEventListener('pointerdown',e=>{down=true;px=e.clientX;py=e.clientY;pingT=performance.now();});
+  addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;overLink=!!e.target.closest('a');inHero=!!e.target.closest('#stick');if(cx<-50){cx=mx;cy=my;}});
+  addEventListener('pointerdown',e=>{if(!e.target.closest('#stick'))return;down=true;px=e.clientX;py=e.clientY;pingT=performance.now();});
   addEventListener('pointerup',()=>{down=false;});
 }
 
 const t0=performance.now();
 function setT(e,v){e.style.transform=v;}
+let solid=false;
 function render(now){
   const t=reduced?0:(now-t0)/1000;
-  if(pT0!==null){
-    const k=seg(now,pT0,pT0+DUR);
-    p=mix(pFrom,pTo,io(k));
-    if(k>=1){p=pTo;pT0=null;}
-  }
+  const hr=hero.getBoundingClientRect();
+  const s=!(hr.bottom>innerHeight-40);
+  if(s!==solid){solid=s;hd.classList.toggle('solid',s);}
+  const visible=hr.bottom>0;
+  const p=io(scrollP());
 
+  if(visible){
   drawWaves(pBack,BACK,t,p);
   drawWaves(pFront,FRONT,t,p);
 
@@ -356,20 +456,21 @@ function render(now){
   setT(el.ferry,`rotate(${(Math.atan(slope)*57.3*.75).toFixed(3)}deg)`);
 
   // sky
+  const portrait=root.classList.contains('portrait');
   const span=L.w+700;
   const cl=((L.w*.72-t*16)%span+span)%span-400;
-  el.cloud.style.left=cl+'px'; el.cloud.style.top=(root.classList.contains('portrait')?110:150)+'px';
+  el.cloud.style.left=cl+'px'; el.cloud.style.top=(portrait?110:150)+'px';
   el.cloud.style.opacity=1-seg(p,.3,.7);
   const gl=((L.w*.3+t*22)%span+span)%span-300;
-  el.gulls.style.left=gl+'px'; el.gulls.style.top=(root.classList.contains('portrait')?680:210)+Math.sin(t*.9)*8+'px';
+  el.gulls.style.left=gl+'px'; el.gulls.style.top=(portrait?680:210)+Math.sin(t*.9)*8+'px';
   el.gulls.style.opacity=1-seg(p,.2,.5);
 
   // first scene copy
   const intro=reduced?1:out(seg(now,t0+200,t0+1100));
   el.t1.style.opacity=intro*(1-seg(p,.62,.7));
   setT(el.t1,tf(0,(1-intro)*26-p*40));
-  el.t1.style.pointerEvents=p>.1?'none':'';
-  el.logo.style.opacity=1-seg(p,.12,.3);
+  el.hint.style.opacity=1-seg(p,0,.1)*1;
+  el.hint.style.visibility=p>.1?'hidden':'';
 
   // island slides in from the left
   const e=io(seg(p,.04,.92));
@@ -388,18 +489,19 @@ function render(now){
   el.p2.style.opacity=pk; setT(el.p2,tf(0,mix(16,0,pk)));
   const bk=seg(p,.86,1);
   el.btn2.style.opacity=bk; setT(el.btn2,tf(0,0,0,mix(.7,1,back(bk))));
+  el.t2.style.visibility=p>.4?'visible':'hidden';
   el.t2.style.pointerEvents=p>.9?'':'none';
 
-  // drifting shade
   setT(shade,`translate(${(Math.sin(t*.35)*2.2).toFixed(3)}%,${(Math.cos(t*.27)*1.6).toFixed(3)}%) rotate(${(Math.sin(t*.22)*.8).toFixed(3)}deg)`);
+  }
 
-  // cursor
   if(fine){
     const dt=Math.min(.05,(now-(last||now))/1000);
     const k=1-Math.exp(-dt*22);
     cx+=(mx-cx)*k; cy+=(my-cy)*k;
-    const s=down?.7:overLink?1.35:1;
-    cur.style.transform=`translate(${cx.toFixed(1)}px,${cy.toFixed(1)}px) scale(${s})`;
+    const sc=down?.7:overLink?1.35:1;
+    cur.style.transform=`translate(${cx.toFixed(1)}px,${cy.toFixed(1)}px) scale(${sc})`;
+    cur.style.opacity=inHero?1:0;
     const pk2=seg(now,pingT,pingT+650);
     ping.style.transform=`translate(${px}px,${py}px) scale(${1+out(pk2)*1.9})`;
     ping.style.opacity=pk2>0&&pk2<1?1-pk2:0;

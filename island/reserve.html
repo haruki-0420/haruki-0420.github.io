@@ -3,161 +3,432 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ご予約 | しおさい荘</title>
-<meta name="description" content="空室カレンダーとご予約フォーム。しおさい荘は一日三組限定の宿です。">
+<title>予約 | しおさい荘</title>
+<meta name="description" content="しおさい荘の予約。日付、部屋、人数を選んで連絡先を入力。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@500;700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
-<div class="page">
+<div class="page has-bar" id="page">
 <header class="hd">
   <a class="logo" href="index.html"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.5 0s5 3 7.5 0 4-3 5.5-1"/><path d="M8 22c2-2 4.5-2 7 0s5 2 7 0"/></svg>しおさい荘</a>
-  <button class="menu-btn" type="button" aria-label="メニューを開く" aria-expanded="false"><span></span></button>
-  <nav class="gnav" aria-label="サイト内メニュー"><a href="rooms.html">客室</a><a href="food.html">お食事</a><a href="access.html">アクセス</a><a href="reserve.html" class="pill sm red" aria-current="page">ご予約</a></nav>
+  <nav class="gnav" aria-label="メニュー"><a class="t" href="rooms.html">客室</a><a class="t" href="index.html#access">アクセス</a><a class="pill red sm" href="reserve.html" aria-current="page">予約する</a></nav>
 </header>
 
-<section class="ph">
-  <div class="wrap ph-in">
-    <div class="rv">
-      <span class="eb">RESERVATION</span>
-      <h1>空室を見て、<br>そのまま予約</h1>
-      <p class="lead">カレンダーから到着日を選ぶと、フォームに日付が入ります。料金の目安もその場で計算します。</p>
-    </div>
-    <div class="ph-art rv"><svg viewBox="0 0 360 300" aria-hidden="true">
-<path class="ink" fill="var(--wall)" d="M46 128h268v168H46z"/><path class="ink" fill="var(--wood)" d="M150 200h60v96h-60z"/>
-<path class="ink" fill="var(--paper)" d="M150 200h60v24h-60z"/><path class="ink" fill="none" d="M170 200v24M190 200v24"/>
-<path class="ink" fill="var(--band)" d="M72 166h52v44H72zM236 166h52v44h-52z"/><path class="ink" fill="none" d="M98 166v44M72 188h52M262 166v44M236 188h52"/>
-<path class="ink" fill="var(--wall)" d="M250 52h28v50h-28z"/><path class="ink" fill="var(--roof)" d="M180 24L340 138H20z"/>
-<path class="ink" fill="none" d="M60 120h240M100 92h160M140 64h80"/></svg></div>
+<main class="rwrap">
+  <div class="rhead">
+    <h1>予約</h1>
+    <ol class="steps3" id="steps" aria-label="手順">
+      <li class="cur" aria-current="step"><span>1</span>日付と部屋</li>
+      <li><span>2</span>連絡先</li>
+      <li><span>3</span>完了</li>
+    </ol>
   </div>
-  <svg class="strip" aria-hidden="true"></svg>
-</section>
 
-<main>
-
-<section class="sec">
-  <div class="wrap split" style="align-items:start">
-    <div class="cal card rv" id="cal">
-      <div class="cal-hd">
-        <button type="button" id="prev" aria-label="前の月">&lt;</button>
-        <h3 id="ym"></h3>
-        <button type="button" id="next" aria-label="次の月">&gt;</button>
+  <!-- STEP 1 -->
+  <section class="step" id="s1" aria-label="日付と部屋">
+    <div class="cols">
+      <div class="calbox card">
+        <div class="stat" aria-live="polite">
+          <div class="cell empty" id="stIn"><small>IN</small><b>未選択</b></div>
+          <div class="cell empty" id="stOut"><small>OUT</small><b>未選択</b></div>
+          <div class="nn" id="stN"></div>
+        </div>
+        <div class="months" id="months"></div>
+        <ul class="legend"><li><b>満</b>満室</li><li><b>休</b>定休日(水)</li></ul>
       </div>
-      <div class="cal-grid" id="grid"></div>
-      <div class="legend"><span>○ 空室あり</span><span>△ 残りわずか</span><span>× 満室</span></div>
-    </div>
 
-    <div class="card rv" style="overflow:hidden">
-      <form class="form" id="form" novalidate>
-        <div class="row">
-          <div class="field"><label for="date">到着日<span class="req">必須</span></label><input type="date" id="date" name="date" required><p class="err">到着日を選んでください</p></div>
-          <div class="field"><label for="nights">泊数</label><select id="nights" name="nights"><option>1</option><option>2</option><option>3</option></select></div>
+      <div class="side">
+        <fieldset class="rooms">
+          <legend>部屋</legend>
+          <div class="rl" id="rl"></div>
+        </fieldset>
+        <div class="gbox card">
+          <div class="gl"><b>人数</b><small id="gcap">定員 1〜4名</small></div>
+          <div class="stepper" role="group" aria-label="人数">
+            <button type="button" id="gm" aria-label="1名減らす">−</button>
+            <output id="gv" aria-live="polite">2名</output>
+            <button type="button" id="gp" aria-label="1名増やす">+</button>
+          </div>
         </div>
-        <div class="row">
-          <div class="field"><label for="room">お部屋</label>
-            <select id="room" name="room">
-              <option value="16500">凪 / 海側和室</option>
-              <option value="19800">潮騒 / 縁側つき和洋室</option>
-              <option value="22000">松風 / 庭側の離れ</option>
-            </select></div>
-          <div class="field"><label for="guests">人数</label><select id="guests" name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-        </div>
-        <div class="est"><span>料金の目安(1泊2食・税込)</span><strong id="total">0円</strong></div>
-        <div class="field"><label for="name">お名前<span class="req">必須</span></label><input id="name" name="name" autocomplete="name" required><p class="err">お名前を入力してください</p></div>
-        <div class="row">
-          <div class="field"><label for="mail">メールアドレス<span class="req">必須</span></label><input type="email" id="mail" name="mail" autocomplete="email" required><p class="err">メールアドレスの形式を確認してください</p></div>
-          <div class="field"><label for="tel">電話番号</label><input type="tel" id="tel" name="tel" autocomplete="tel"></div>
-        </div>
-        <div class="field"><label for="msg">ご要望(アレルギー、到着の便など)</label><textarea id="msg" name="msg"></textarea></div>
-        <div><button type="submit" class="pill red" style="border:3px solid var(--line)">予約を申し込む</button></div>
-        <p style="font-size:13px;color:var(--muted)">サンプルサイトのため、送信してもどこにも届きません。</p>
-      </form>
-      <div class="done" id="done">
-        <svg viewBox="0 0 96 96" aria-hidden="true"><circle class="ink" fill="var(--band)" cx="48" cy="48" r="40"/><path class="ink" fill="none" d="M30 50l12 12 24-26"/></svg>
-        <h2>お申し込みを受け付けました</h2>
-        <p id="doneText" style="color:var(--muted)"></p>
-        <p style="margin-top:24px"><a class="pill sm" href="index.html">トップへ戻る</a></p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step" id="s2" aria-label="連絡先" hidden>
+    <h2 id="h2s2" tabindex="-1">連絡先</h2>
+    <div class="sum card">
+      <dl id="sum2"></dl>
+      <button type="button" class="linkbtn" id="chg">変更</button>
+    </div>
+    <form class="fm card" id="form" novalidate>
+      <div class="fld" id="f-name">
+        <label for="name">お名前</label>
+        <input id="name" name="name" autocomplete="name" aria-describedby="e-name">
+        <p class="err" id="e-name"></p>
+      </div>
+      <div class="fld" id="f-mail">
+        <label for="mail">メールアドレス</label>
+        <input id="mail" name="mail" type="email" autocomplete="email" inputmode="email" aria-describedby="e-mail">
+        <p class="err" id="e-mail"></p>
+      </div>
+      <div class="fld" id="f-tel">
+        <label for="tel">電話番号<span class="opt">任意</span></label>
+        <input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="e-tel">
+        <p class="err" id="e-tel"></p>
+      </div>
+      <div class="fm-act">
+        <button type="submit" class="pill red" id="confirm" disabled>予約を確定する</button>
+        <p class="fine">サンプルのため送信されません</p>
+      </div>
+    </form>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step" id="s3" aria-label="完了" hidden>
+    <div class="dn3 card">
+      <svg class="ck" viewBox="0 0 104 104" fill="none" aria-hidden="true"><circle class="ink c" fill="var(--band)" cx="52" cy="52" r="42"/><path class="ink m" d="M32 54l14 14 27-30"/></svg>
+      <h2 id="h2s3" tabindex="-1">予約を受け付けました</h2>
+      <p>予約番号</p>
+      <div class="code" id="code" aria-label="予約番号"></div>
+      <div class="sum card"><dl id="sum3"></dl></div>
+      <a class="pill" href="index.html">トップへ戻る</a>
+      <p class="fine">サンプルのため送信されません</p>
+    </div>
+  </section>
 </main>
 
 <footer class="ft">
   <div class="wrap ft-in">
-    <div>
-      <a class="logo" href="index.html"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.5 0s5 3 7.5 0 4-3 5.5-1"/><path d="M8 22c2-2 4.5-2 7 0s5 2 7 0"/></svg>しおさい荘</a>
-      <p style="margin-top:16px">〒000-0000 架空県しおさい島 1-2<br>TEL 000-000-0000(受付 9:00〜18:00)</p>
-    </div>
-    <ul>
-      <li><a href="index.html">トップ</a></li>
-      <li><a href="rooms.html">客室</a></li>
-      <li><a href="food.html">お食事</a></li>
-      <li><a href="access.html">アクセス</a></li>
-      <li><a href="reserve.html">ご予約</a></li>
-    </ul>
-    <ul>
-      <li>チェックイン 15:00〜18:00</li>
-      <li>チェックアウト 10:00</li>
-      <li>一日三組限定</li>
-      <li>定休日 水曜日</li>
+    <a class="logo" href="index.html"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="15" cy="15" r="12.5"/><path d="M5 17c2.5-3 5-3 7.5 0s5 3 7.5 0 4-3 5.5-1"/><path d="M8 22c2-2 4.5-2 7 0s5 2 7 0"/></svg>しおさい荘</a>
+    <ul class="ft-l">
+      <li>〒000-0000 架空県しおさい島 1-2</li>
+      <li>TEL 000-000-0000(9:00〜18:00)</li>
+      <li>チェックイン 15:00〜18:00 / チェックアウト 10:00</li>
     </ul>
   </div>
-  <p class="note">このサイトはWeb制作のサンプルです。宿、住所、電話番号、料金、時刻表はすべて架空のものです。</p>
+  <p class="note">Web制作サンプル。店名・住所・料金は架空です。</p>
 </footer>
 </div>
-<div id="ping"></div><div id="cur"></div>
+
+<div class="bar" id="bar">
+  <p class="bar-sel" id="bSel"></p>
+  <div class="bar-r">
+    <div class="bar-t"><small>合計</small><strong id="bTot">–</strong></div>
+    <button type="button" class="pill red" id="next" disabled>次へ</button>
+  </div>
+</div>
+
 <script src="site.js"></script>
 <script>
 (function(){
-  var ym=document.getElementById('ym'),grid=document.getElementById('grid'),date=document.getElementById('date');
-  var today=new Date();today.setHours(0,0,0,0);
-  var view=new Date(today.getFullYear(),today.getMonth(),1);
-  var maxView=new Date(today.getFullYear(),today.getMonth()+3,1);
-  function pad(n){return n<10?'0'+n:''+n}
-  function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
-  // 架空の空室状況: 日付から決まる擬似乱数。水曜は定休日
-  function rooms(d){if(d.getDay()===3)return -1;var h=(d.getFullYear()*372+d.getMonth()*31+d.getDate())*2654435761%97;var r=h%4;if(d.getDay()===6&&r>1)r=1;return r>3?3:r}
-  function draw(){
-    ym.textContent=view.getFullYear()+'年'+(view.getMonth()+1)+'月';
-    document.getElementById('prev').disabled=view<=new Date(today.getFullYear(),today.getMonth(),1);
-    document.getElementById('next').disabled=view>=maxView;
-    var h='';['日','月','火','水','木','金','土'].forEach(function(w){h+='<div class="dw">'+w+'</div>'});
-    var first=view.getDay(),days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
-    for(var i=0;i<first;i++)h+='<div></div>';
-    for(var d=1;d<=days;d++){
-      var dt=new Date(view.getFullYear(),view.getMonth(),d),r=rooms(dt),past=dt<today,v=iso(dt);
-      var mark=r===-1?'休':r===0?'×':r===1?'△':'○',cls=r>=2?'ok':r===1?'few':'';
-      var dis=past||r<=0;
-      h+='<button type="button" class="'+cls+(date.value===v?' sel':'')+'" data-d="'+v+'"'+(dis?' disabled':'')+' aria-label="'+(dt.getMonth()+1)+'月'+d+'日 '+mark+'">'+d+'<i>'+mark+'</i></button>';
-    }
-    grid.innerHTML=h;
+  var $=function(i){return document.getElementById(i)};
+  var ROOMS=SHIO.rooms, yen=SHIO.yen;
+  var DOW=['日','月','火','水','木','金','土'];
+  var today=new Date(); today.setHours(0,0,0,0);
+  var WINDOW_MONTHS=6;
+
+  /* ---------- 日付と空室 ---------- */
+  function day(y,m,d){return new Date(y,m,d)}
+  function addDays(d,n){return new Date(d.getFullYear(),d.getMonth(),d.getDate()+n)}
+  function key(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+  function same(a,b){return a&&b&&a.getTime()===b.getTime()}
+  function md(d){return (d.getMonth()+1)+'/'+d.getDate()+'('+DOW[d.getDay()]+')'}
+  function hs(a,b,c,e){
+    var h=Math.imul(a,2654435761)^Math.imul(b+7,40503)^Math.imul(c+13,69069)^Math.imul(e+29,1274126177);
+    h^=h>>>15; h=Math.imul(h,2246822519); h^=h>>>13; h=Math.imul(h,3266489917); h^=h>>>16;
+    return (h>>>0)%100;
   }
-  grid.addEventListener('click',function(e){var b=e.target.closest('button[data-d]');if(!b)return;date.value=b.dataset.d;date.closest('.field').classList.remove('bad');draw();calc()});
-  document.getElementById('prev').onclick=function(){view.setMonth(view.getMonth()-1);draw()};
-  document.getElementById('next').onclick=function(){view.setMonth(view.getMonth()+1);draw()};
-  date.min=iso(today);
-  date.addEventListener('change',function(){if(date.value){var p=date.value.split('-');view=new Date(+p[0],+p[1]-1,1)}draw()});
+  // 日付から決まる擬似乱数で、部屋ごとの空きを決める。土曜は埋まりやすい
+  function free(ri,d){
+    var w=d.getDay(), th=w===6?58:w===5?40:26;
+    return hs(d.getFullYear()*12+d.getMonth(),d.getDate(),ri,1)>=th;
+  }
+  function closed(d){return d.getDay()===3}
+  function past(d){return d<today}
+  function nightPrice(r,d){var w=d.getDay();return r.base+(w===5||w===6?2000:0)}
+  function lowest(d){
+    var m=0;
+    ROOMS.forEach(function(r,i){if(free(i,d)){var p=nightPrice(r,d);if(!m||p<m)m=p}});
+    return m;
+  }
+  function bookable(d){return !past(d)&&!closed(d)&&lowest(d)>0}
 
-  var f=document.getElementById('form'),total=document.getElementById('total');
-  function price(){return +f.room.value*+f.guests.value*+f.nights.value}
-  function calc(){total.textContent=price().toLocaleString('ja-JP')+'円'}
-  ['room','guests','nights'].forEach(function(n){f[n].addEventListener('change',calc)});
-  calc();draw();
+  /* ---------- 状態 ---------- */
+  var st={inD:null,outD:null,room:null,guests:2,off:0,focusKey:null};
+  var twoUp=true;
+  function shown(){return twoUp?2:1}
 
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var ok=true;
-    [['date',function(v){return !!v}],['name',function(v){return v.trim().length>0}],['mail',function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}]].forEach(function(c){
-      var el=f[c[0]],good=c[1](el.value);el.closest('.field').classList.toggle('bad',!good);if(!good&&ok){el.focus();ok=false}
+  function nights(){
+    var a=[]; if(!st.inD||!st.outD)return a;
+    for(var d=st.inD;d<st.outD;d=addDays(d,1))a.push(d);
+    return a;
+  }
+  function roomOk(ri){
+    var n=nights();
+    for(var i=0;i<n.length;i++)if(!free(ri,n[i]))return false;
+    return true;
+  }
+  function total(){
+    if(!st.room||!st.inD||!st.outD)return 0;
+    var r=SHIO.room(st.room),s=0;
+    nights().forEach(function(d){s+=nightPrice(r,d)});
+    return s*st.guests;
+  }
+  function bounds(){
+    var r=st.room?SHIO.room(st.room):null;
+    return r?[r.min,r.max]:[1,4];
+  }
+  // 日付セルが押せるか
+  function cellOn(d){
+    if(past(d))return false;
+    if(st.inD&&!st.outD&&d>st.inD){
+      // チェックアウト選択中: 間の夜がすべて泊まれること
+      for(var x=st.inD;x<d;x=addDays(x,1))if(!bookable(x))return false;
+      return true;
+    }
+    return bookable(d);
+  }
+
+  /* ---------- カレンダー ---------- */
+  var monthsEl=$('months'), cells=[];
+  function buildMonths(){
+    monthsEl.innerHTML=''; cells=[];
+    monthsEl.className='months'+(twoUp?'':' one');
+    var n=shown();
+    for(var k=0;k<n;k++){
+      var first=day(today.getFullYear(),today.getMonth()+st.off+k,1);
+      var sec=document.createElement('section'); sec.className='month';
+      var hd=document.createElement('div'); hd.className='mhd';
+      if(k===0){var pb=document.createElement('button');pb.type='button';pb.id='prev';pb.setAttribute('aria-label','前の月');pb.textContent='‹';pb.disabled=st.off<=0;hd.appendChild(pb);pb.addEventListener('click',function(){nav(-1)})}
+      else{var sp=document.createElement('span');sp.className='sp';hd.appendChild(sp)}
+      var h3=document.createElement('h3'); h3.textContent=first.getFullYear()+'年'+(first.getMonth()+1)+'月'; hd.appendChild(h3);
+      if(k===n-1){var nb=document.createElement('button');nb.type='button';nb.id='nextm';nb.setAttribute('aria-label','次の月');nb.textContent='›';nb.disabled=st.off>=WINDOW_MONTHS-n;hd.appendChild(nb);nb.addEventListener('click',function(){nav(1)})}
+      else{var sp2=document.createElement('span');sp2.className='sp';hd.appendChild(sp2)}
+      if(k===0&&n>1){}
+      sec.appendChild(hd);
+      var g=document.createElement('div'); g.className='g7';
+      DOW.forEach(function(w){var s=document.createElement('span');s.className='dw';s.textContent=w;g.appendChild(s)});
+      for(var i=0;i<first.getDay();i++)g.appendChild(document.createElement('span'));
+      var dn=new Date(first.getFullYear(),first.getMonth()+1,0).getDate();
+      for(var d=1;d<=dn;d++){
+        var dt=day(first.getFullYear(),first.getMonth(),d);
+        var b=document.createElement('button'); b.type='button'; b.className='day'; b.tabIndex=-1;
+        b.dataset.k=key(dt); b._d=dt;
+        b.innerHTML=d+'<i></i>';
+        g.appendChild(b); cells.push(b);
+      }
+      sec.appendChild(g); monthsEl.appendChild(sec);
+    }
+    updateCells();
+  }
+  function nav(dir){
+    var maxOff=WINDOW_MONTHS-shown();
+    st.off=Math.max(0,Math.min(maxOff,st.off+dir));
+    buildMonths();
+    var t=$(dir<0?'prev':'nextm'); if(t&&t.disabled)t=$(dir<0?'nextm':'prev'); if(t)t.focus();
+  }
+  function updateCells(){
+    var tabSet=false, sel=null;
+    cells.forEach(function(b){
+      var d=b._d, on=cellOn(d), cls='day';
+      var i=b.querySelector('i'), label=(d.getMonth()+1)+'月'+d.getDate()+'日('+DOW[d.getDay()]+')';
+      var sub, note;
+      if(past(d)){sub='';note='選択できません'}
+      else if(closed(d)){sub='休';note='定休日'}
+      else if(lowest(d)===0){sub='満';note='満室'}
+      else{var p=lowest(d);sub=(p/1000).toFixed(1)+'k';note='最安 '+yen(p)}
+      var isIn=same(d,st.inD), isOut=same(d,st.outD);
+      if(st.inD&&st.outD&&d>st.inD&&d<st.outD)cls+=' mid';
+      if(isIn){cls+=' in';note+=' チェックイン'}
+      if(isOut){cls+=' out';note+=' チェックアウト'}
+      // 選択中のセル、または選択中の範囲では常に有効扱い
+      if(!on&&!isIn&&!isOut)cls+=' off';
+      b.className=cls; i.textContent=sub;
+      b.setAttribute('aria-disabled',(!on&&!isIn&&!isOut)?'true':'false');
+      b.setAttribute('aria-label',label+' '+note);
+      b.setAttribute('aria-pressed',(isIn||isOut)?'true':'false');
+      b.tabIndex=-1;
+      if(isIn&&!sel)sel=b;
     });
-    if(!ok)return;
-    var room=f.room.options[f.room.selectedIndex].text;
-    document.getElementById('doneText').textContent=f.date.value.replace(/-/g,'/')+' から '+f.nights.value+'泊、'+room+'、'+f.guests.value+'名様。料金の目安は '+price().toLocaleString('ja-JP')+'円です。';
-    f.style.display='none';document.getElementById('done').style.display='block';
+    var cand=sel;
+    if(st.focusKey){cells.forEach(function(b){if(b.dataset.k===st.focusKey)cand=b})}
+    if(!cand){for(var i=0;i<cells.length;i++){if(cells[i].getAttribute('aria-disabled')==='false'){cand=cells[i];break}}}
+    if(!cand)cand=cells[0];
+    if(cand)cand.tabIndex=0;
+  }
+  monthsEl.addEventListener('click',function(e){
+    var b=e.target.closest('button.day'); if(!b)return;
+    st.focusKey=b.dataset.k;
+    if(b.getAttribute('aria-disabled')==='true')return;
+    var d=b._d;
+    if(!st.inD||(st.inD&&st.outD)){st.inD=d;st.outD=null}
+    else if(same(d,st.inD)){st.inD=null}
+    else if(d<st.inD){st.inD=d}
+    else{st.outD=d}
+    afterChange();
   });
+  monthsEl.addEventListener('keydown',function(e){
+    var b=e.target.closest('button.day'); if(!b)return;
+    var i=cells.indexOf(b), n=-1;
+    if(e.key==='ArrowRight')n=i+1; else if(e.key==='ArrowLeft')n=i-1;
+    else if(e.key==='ArrowDown')n=i+7; else if(e.key==='ArrowUp')n=i-7;
+    else if(e.key==='Home')n=0; else if(e.key==='End')n=cells.length-1;
+    if(n<0)return;
+    e.preventDefault();
+    n=Math.max(0,Math.min(cells.length-1,n));
+    cells.forEach(function(c){c.tabIndex=-1});
+    st.focusKey=cells[n].dataset.k;
+    cells[n].tabIndex=0; cells[n].focus();
+  });
+
+  /* ---------- 部屋カード ---------- */
+  var rl=$('rl');
+  ROOMS.forEach(function(r){
+    var lab=document.createElement('label'); lab.className='rcard';
+    lab.innerHTML='<input type="radio" name="room" value="'+r.id+'">'
+      +'<span class="rbody"><span class="rthumb" data-win="'+r.id+'"></span>'
+      +'<span class="rtxt"><b>'+r.name+'</b><span class="cap">定員 '+r.min+'〜'+r.max+'名</span><span class="pr">1泊2食/1名 <em>'+yen(r.base)+'〜</em></span></span>'
+      +'<span class="rchk"><svg viewBox="0 0 18 18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.500l4 4 8-9"/></svg></span>'
+      +'<span class="rfull">満室日あり</span></span>';
+    rl.appendChild(lab);
+  });
+  SHIO.fill(rl);
+  var radios=[].slice.call(rl.querySelectorAll('input'));
+  rl.addEventListener('change',function(e){
+    if(e.target.name!=='room')return;
+    st.room=e.target.value;
+    clampGuests(); afterChange(true);
+  });
+  function updateRooms(){
+    radios.forEach(function(rd,i){
+      var ok=roomOk(i);
+      rd.disabled=!ok;
+      if(!ok&&rd.checked){rd.checked=false;st.room=null}
+      rd.checked=(st.room===rd.value);
+    });
+  }
+
+  /* ---------- 人数 ---------- */
+  function clampGuests(){var b=bounds();st.guests=Math.max(b[0],Math.min(b[1],st.guests))}
+  $('gm').addEventListener('click',function(){st.guests--;clampGuests();afterChange(true)});
+  $('gp').addEventListener('click',function(){st.guests++;clampGuests();afterChange(true)});
+  function updateGuests(){
+    var b=bounds();
+    $('gv').textContent=st.guests+'名';
+    $('gm').disabled=st.guests<=b[0];
+    $('gp').disabled=st.guests>=b[1];
+    $('gcap').textContent='定員 '+b[0]+'〜'+b[1]+'名';
+  }
+
+  /* ---------- 状態表示と集計バー ---------- */
+  function setCell(id,d){
+    var c=$(id); c.classList.toggle('empty',!d);
+    c.querySelector('b').textContent=d?md(d):'未選択';
+  }
+  function updateBar(){
+    setCell('stIn',st.inD); setCell('stOut',st.outD);
+    var nn=nights().length;
+    $('stN').textContent=nn?nn+'泊':'';
+    var dateTxt=st.inD&&st.outD?md(st.inD)+'〜'+md(st.outD)+' '+nn+'泊':st.inD?md(st.inD)+'〜 チェックアウト日を選択':'';
+    var r=st.room?SHIO.room(st.room):null;
+    var parts=[];
+    parts.push(dateTxt?'<span>'+dateTxt+'</span>':'<span class="na">日付を選択</span>');
+    parts.push(r?'<span>'+r.name+'</span>':'<span class="na">部屋を選択</span>');
+    parts.push('<span>'+st.guests+'名</span>');
+    $('bSel').innerHTML=parts.join(' / ');
+    var ready=!!(st.inD&&st.outD&&r);
+    $('bTot').textContent=ready?yen(total()):'–';
+    $('next').disabled=!ready;
+  }
+  function afterChange(keepFocus){
+    updateCells(); updateRooms(); updateGuests(); updateBar();
+    var f=document.activeElement;
+    if(!keepFocus&&f&&f.classList&&f.classList.contains('day')){}
+  }
+
+  /* ---------- ステップ ---------- */
+  var steps=[].slice.call($('steps').children);
+  function go(n,noFocus){
+    ['s1','s2','s3'].forEach(function(id,i){$(id).hidden=i!==n-1});
+    steps.forEach(function(li,i){
+      li.className=i===n-1?'cur':i<n-1?'dn':'';
+      if(i===n-1)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');
+    });
+    $('bar').hidden=n!==1;
+    $('page').classList.toggle('has-bar',n===1);
+    window.scrollTo({top:0,behavior:'instant'});
+    if(!noFocus){var h=n===2?$('h2s2'):n===3?$('h2s3'):null;if(h)h.focus({preventScroll:true})}
+  }
+  function summaryHtml(){
+    var r=SHIO.room(st.room), nn=nights().length;
+    return [['日付',md(st.inD)+'〜'+md(st.outD)],['泊数',nn+'泊'],['部屋',r.name],['人数',st.guests+'名'],['合計',yen(total())]]
+      .map(function(x){return '<div><dt>'+x[0]+'</dt><dd'+(x[0]==='合計'?' class="tot"':'')+'>'+x[1]+'</dd></div>'}).join('');
+  }
+  $('next').addEventListener('click',function(){
+    if($('next').disabled)return;
+    $('sum2').innerHTML=summaryHtml();
+    go(2);
+  });
+  $('chg').addEventListener('click',function(){go(1,true);var c=document.querySelector('.day[tabindex="0"]');if(c)c.focus({preventScroll:true})});
+
+  /* ---------- フォーム ---------- */
+  var F={name:$('name'),mail:$('mail'),tel:$('tel')}, touched={name:false,mail:false,tel:false};
+  var CHECK={
+    name:function(v){return v.trim().length>0?'':'お名前を入力してください'},
+    mail:function(v){v=v.trim();if(!v)return 'メールアドレスを入力してください';return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)?'':'メールアドレスの形式が正しくありません'},
+    tel:function(v){v=v.replace(/[\s-]/g,'');if(!v)return '';return /^0\d{9,10}$/.test(v)?'':'電話番号は10〜11桁の数字で入力してください'}
+  };
+  function validate(show){
+    var all=true;
+    Object.keys(F).forEach(function(k){
+      var msg=CHECK[k](F[k].value);
+      if(msg)all=false;
+      var shownMsg=(touched[k]||show)?msg:'';
+      $('e-'+k).textContent=shownMsg;
+      $('f-'+k).classList.toggle('bad',!!shownMsg);
+      F[k].setAttribute('aria-invalid',shownMsg?'true':'false');
+    });
+    $('confirm').disabled=!all;
+    return all;
+  }
+  Object.keys(F).forEach(function(k){
+    F[k].addEventListener('input',function(){touched[k]=true;validate(false)});
+    F[k].addEventListener('blur',function(){touched[k]=true;validate(false)});
+  });
+  $('form').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!validate(true))return;
+    var A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789', c='';
+    var buf=new Uint32Array(6);
+    if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(buf);else for(var i=0;i<6;i++)buf[i]=Math.floor(Math.random()*4294967296);
+    for(var j=0;j<6;j++)c+=A.charAt(buf[j]%A.length);
+    $('code').textContent=c;
+    $('sum3').innerHTML=summaryHtml();
+    go(3);
+  });
+
+  /* ---------- 初期化 ---------- */
+  var mq=matchMedia('(min-width:761px)');
+  function setMode(){
+    var t=mq.matches;
+    if(t!==twoUp||!cells.length){
+      twoUp=t;
+      st.off=Math.max(0,Math.min(WINDOW_MONTHS-shown(),st.off));
+      buildMonths();
+    }
+  }
+  if(mq.addEventListener)mq.addEventListener('change',setMode);else mq.addListener(setMode);
+  twoUp=mq.matches;
+  var q=new URLSearchParams(location.search).get('room');
+  if(q&&SHIO.room(q)){st.room=q;clampGuests()}
+  buildMonths();
+  afterChange(true);
+  validate(false);
+  $('confirm').disabled=true;
 })();
 </script>
 </body>
