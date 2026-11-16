@@ -67,6 +67,9 @@ h1,h2,h3{font-family:"Shippori Mincho B1",serif;font-weight:800;letter-spacing:-
 .t1{background:#f7dfc0}.t2{background:#efe2c2}.t3{background:#f1d6c6}.t4{background:#dde6cb}
 .mbody{padding:14px 16px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .mbody h3{font-size:17px}
+.mbody .desc{flex-basis:100%;margin-top:6px;font:500 13.5px/1.75 "Zen Kaku Gothic New",sans-serif;opacity:.82}
+.lead{margin-top:16px;max-width:30em;line-height:1.95}
+.sec-lead{max-width:42em;margin:-14px 0 30px;line-height:1.95}
 .mbody p{font:800 18px/1 "Shippori Mincho B1",serif;color:var(--accent-d)}
 
 /* reserve */
@@ -190,6 +193,7 @@ legend{font:800 20px/1.3 "Shippori Mincho B1",serif;margin-bottom:14px;padding:0
       <div>
         <h1>こもれびベーカリー</h1>
         <p class="fact">国産小麦と自家製酵母のパン屋 / 7:00開店</p>
+        <p class="lead">北海道産の小麦と、レーズンから起こした自家製酵母を使い、ひと晩かけて低温でじっくり発酵させたパンを毎朝焼いています。</p>
         <p class="status" id="status" role="status" data-s="closed"><i aria-hidden="true"></i><span>本日 <b id="statusText">7:00-17:00</b></span></p>
       </div>
       <svg class="hero-art" viewBox="0 0 400 350" aria-hidden="true">
@@ -212,22 +216,22 @@ legend{font:800 20px/1.3 "Shippori Mincho B1",serif;margin-bottom:14px;padding:0
         <li class="mcard">
           <div class="mthumb t1"><em>予約可</em>
             <svg viewBox="0 0 100 80" aria-hidden="true"><path d="M10 72V36a40 26 0 0 1 80 0V72Z" fill="#e0a466" stroke="#2b1d14" stroke-width="2.6" stroke-linejoin="round"/><path d="M17 72V38a33 20 0 0 1 66 0V72Z" fill="#f6e3c4" stroke="#2b1d14" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
-          <div class="mbody"><h3>こもれび食パン</h3><p>480円</p></div>
+          <div class="mbody"><h3>こもれび食パン</h3><p>480円</p><span class="desc">しっとりとした口どけの看板商品です。トーストすると耳の香ばしさが引き立ちます。</span></div>
         </li>
         <li class="mcard">
           <div class="mthumb t2">
             <svg viewBox="0 0 100 80" aria-hidden="true"><path d="M8 50q42-52 84 0q-42 30-84 0Z" fill="#d48d4c" stroke="#2b1d14" stroke-width="2.6" stroke-linejoin="round"/><path d="M30 34l10 18M50 28l8 22M70 34l6 18" stroke="#f3d3a8" stroke-width="4" stroke-linecap="round"/></svg></div>
-          <div class="mbody"><h3>クロワッサン</h3><p>260円</p></div>
+          <div class="mbody"><h3>クロワッサン</h3><p>260円</p><span class="desc">発酵バターを折り込み、外はさっくり、中はしっとりと焼き上げています。</span></div>
         </li>
         <li class="mcard">
           <div class="mthumb t3">
             <svg viewBox="0 0 100 80" aria-hidden="true"><circle cx="50" cy="42" r="32" fill="#c98648" stroke="#2b1d14" stroke-width="2.6"/><circle cx="40" cy="36" r="4" fill="#6b3a2a"/><circle cx="58" cy="30" r="4" fill="#6b3a2a"/><circle cx="56" cy="52" r="4" fill="#6b3a2a"/><circle cx="38" cy="54" r="4" fill="#6b3a2a"/></svg></div>
-          <div class="mbody"><h3>いちじくとくるみ</h3><p>340円</p></div>
+          <div class="mbody"><h3>いちじくとくるみ</h3><p>340円</p><span class="desc">ライ麦入りの生地に、白ワインに漬けたいちじくとローストしたくるみを合わせました。</span></div>
         </li>
         <li class="mcard">
           <div class="mthumb t4">
             <svg viewBox="0 0 100 80" aria-hidden="true"><path d="M26 22h48l-6 46H32Z" fill="#fff" stroke="#2b1d14" stroke-width="2.6" stroke-linejoin="round"/><path d="M74 32q16 2 10 18q-4 8-14 6" fill="none" stroke="#2b1d14" stroke-width="8" stroke-linecap="round"/><path d="M74 32q16 2 10 18q-4 8-14 6" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M31 30h38l-2 10H33Z" fill="#8a5a3c" stroke="#2b1d14" stroke-width="2" stroke-linejoin="round"/></svg></div>
-          <div class="mbody"><h3>ブレンドコーヒー</h3><p>400円</p></div>
+          <div class="mbody"><h3>ブレンドコーヒー</h3><p>400円</p><span class="desc">近くの焙煎所に依頼した中深煎りのブレンドです。パンと一緒のご注文で50円引きになります。</span></div>
         </li>
       </ul>
     </div>
@@ -236,6 +240,7 @@ legend{font:800 20px/1.3 "Shippori Mincho B1",serif;margin-bottom:14px;padding:0
   <section class="sec" id="reserve">
     <div class="wrap">
       <h2>食パンの予約</h2>
+      <p class="sec-lead">看板の食パンは焼き上がりの数に限りがあるため、前日18時までのご予約をおすすめしています。ご予約分は受け取り時間に合わせて焼き上げ、店頭でお渡しします。</p>
       <div class="rcard" id="rcard">
         <div class="form-wrap" id="formWrap" style="display:contents">
           <form id="rform" style="display:contents" novalidate>

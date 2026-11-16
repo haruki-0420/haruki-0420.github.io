@@ -35,6 +35,8 @@ svg.w path{stroke:var(--line);stroke-width:3.2;stroke-linecap:round;stroke-linej
 .t1 p{margin-top:22px;font:700 28px/1.3 "Zen Kaku Gothic New",sans-serif;letter-spacing:.12em}
 .t2{left:990px;top:420px;width:560px}
 .t2 h2{font-size:60px;line-height:1.1;letter-spacing:-.04em;margin-bottom:20px}
+.t2-lead{margin:10px 0 18px;font:700 16px/1.8 "Zen Kaku Gothic New",sans-serif}
+.portrait .t2-lead{font-size:22px}
 .facts{background:var(--paper2);border:3px solid var(--line);border-radius:18px;overflow:hidden}
 .facts li{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:14px;padding:13px 20px;border-bottom:2px solid var(--line);font:700 21px/1.2 "Zen Kaku Gothic New",sans-serif}
 .facts li:last-child{border-bottom:0}
@@ -157,6 +159,7 @@ html.fine #cur,html.fine #ping{display:block}
     </div>
     <div class="t2" id="t2">
       <h2 id="h2">しおさい荘</h2>
+      <p class="t2-lead">瀬戸内海に浮かぶしおさい島の、1日3組限定の小さな宿です。</p>
       <ul class="facts" id="p2">
         <li><span data-ico="yen"></span><span>1泊2食</span><b>16,500円〜</b></li>
         <li><span data-ico="boat"></span><span>みどり港からフェリー</span><b>25分</b></li>
@@ -174,6 +177,7 @@ html.fine #cur,html.fine #ping{display:block}
 <section class="sec" id="rooms">
   <div class="wrap">
     <h2 class="sec-h">客室</h2>
+    <p class="sec-lead">海側の和室、広縁付きの和洋室、松林に面した離れの3室をご用意しています。全室禁煙で、<span class="nw">1日3組</span>までのご案内のため、館内では静かにお過ごしいただけます。</p>
     <table class="cmp">
       <caption class="sr">客室の比較</caption>
       <thead><tr><td></td>
@@ -184,6 +188,7 @@ html.fine #cur,html.fine #ping{display:block}
         <tr><th scope="row">広さ</th><td>8畳</td><td>12畳+縁側</td><td>10畳(離れ)</td></tr>
         <tr><th scope="row">定員</th><td>1〜2名</td><td>2〜4名</td><td>2〜3名</td></tr>
         <tr><th scope="row">眺め</th><td>海</td><td>海・夕日</td><td>庭・松</td></tr>
+        <tr><th scope="row">特徴</th><td>港と島々を一望</td><td>夕日が見える広縁</td><td>テラス付きの一棟貸し</td></tr>
         <tr><th scope="row">1泊2食/1名</th><td class="pr">16,500円〜</td><td class="pr">19,800円〜</td><td class="pr">22,000円〜</td></tr>
         <tr class="act"><th scope="row" class="sr">予約</th>
           <td><a class="pill red sm" href="reserve.html?room=nagi">この部屋で予約</a></td>
@@ -195,17 +200,17 @@ html.fine #cur,html.fine #ping{display:block}
     <div class="cmp-cards">
       <article class="rc card">
         <div class="rc-h"><span class="win" data-win="nagi"></span><h3>凪</h3></div>
-        <dl><div><dt>広さ</dt><dd>8畳</dd></div><div><dt>定員</dt><dd>1〜2名</dd></div><div><dt>眺め</dt><dd>海</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">16,500円〜</dd></div></dl>
+        <dl><div><dt>広さ</dt><dd>8畳</dd></div><div><dt>定員</dt><dd>1〜2名</dd></div><div><dt>眺め</dt><dd>海</dd></div><div><dt>特徴</dt><dd>港と島々を一望</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">16,500円〜</dd></div></dl>
         <a class="pill red sm" href="reserve.html?room=nagi">この部屋で予約</a>
       </article>
       <article class="rc card">
         <div class="rc-h"><span class="win" data-win="shiosai"></span><h3>潮騒</h3></div>
-        <dl><div><dt>広さ</dt><dd>12畳+縁側</dd></div><div><dt>定員</dt><dd>2〜4名</dd></div><div><dt>眺め</dt><dd>海・夕日</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">19,800円〜</dd></div></dl>
+        <dl><div><dt>広さ</dt><dd>12畳+縁側</dd></div><div><dt>定員</dt><dd>2〜4名</dd></div><div><dt>眺め</dt><dd>海・夕日</dd></div><div><dt>特徴</dt><dd>夕日が見える広縁</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">19,800円〜</dd></div></dl>
         <a class="pill red sm" href="reserve.html?room=shiosai">この部屋で予約</a>
       </article>
       <article class="rc card">
         <div class="rc-h"><span class="win" data-win="matsukaze"></span><h3>松風</h3></div>
-        <dl><div><dt>広さ</dt><dd>10畳(離れ)</dd></div><div><dt>定員</dt><dd>2〜3名</dd></div><div><dt>眺め</dt><dd>庭・松</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">22,000円〜</dd></div></dl>
+        <dl><div><dt>広さ</dt><dd>10畳(離れ)</dd></div><div><dt>定員</dt><dd>2〜3名</dd></div><div><dt>眺め</dt><dd>庭・松</dd></div><div><dt>特徴</dt><dd>テラス付きの一棟貸し</dd></div><div><dt>1泊2食/1名</dt><dd class="pr">22,000円〜</dd></div></dl>
         <a class="pill red sm" href="reserve.html?room=matsukaze">この部屋で予約</a>
       </article>
     </div>
@@ -228,6 +233,7 @@ html.fine #cur,html.fine #ping{display:block}
 <path class="ink3" fill="none" d="M150 40l60 90M170 36l50 94"/></svg></div>
     <div>
       <h2 class="sec-h">食事</h2>
+      <p class="sec-lead">夕食は、その朝に島の漁師から仕入れた地魚を中心にした会席料理です。朝食には、宿で一夜干しにした自家製の干物と、釜で炊いたご飯をお出しします。</p>
       <dl class="times">
         <div><dt>夕食</dt><dd><span class="chip">18:00</span><span class="chip">19:00</span></dd></div>
         <div><dt>朝食</dt><dd><span class="chip">8:00</span></dd></div>
@@ -247,6 +253,7 @@ html.fine #cur,html.fine #ping{display:block}
 <section class="sec" id="access">
   <div class="wrap">
     <h2 class="sec-h">アクセス</h2>
+    <p class="sec-lead">しおさい島へは、みどり港からフェリーで約25分です。島の港までは宿の車でお迎えにあがりますので、ご乗船の便を前日までにお知らせください。</p>
     <div class="acc-top">
       <div class="acc-map"><svg viewBox="0 0 720 460" aria-label="みどり港としおさい島の位置を示す地図">
 <path fill="var(--band)" d="M0 0h720v460H0z"/>
@@ -281,7 +288,7 @@ html.fine #cur,html.fine #ping{display:block}
           <b>みどり港 発</b>
           <span class="chip">7:10</span><span class="chip">10:30</span><span class="chip">13:40</span><span class="chip fin">16:20<small>最終</small></span><span class="chip">18:30</span>
         </div>
-        <p class="legend1">最終 = チェックインに間に合う最終便</p>
+        <p class="legend1">16:20発が、チェックインに間に合う最終便です。</p>
       </div>
     </div>
   </div>

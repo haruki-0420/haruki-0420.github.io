@@ -65,6 +65,7 @@ h1,h2,h3{font-family:"Shippori Mincho B1",serif;font-weight:800;letter-spacing:-
 .more a{display:inline-flex;align-items:center;min-height:44px;font-weight:700;text-underline-offset:5px}
 
 /* 食事 */
+.sec-lead{max-width:42em;margin:0 0 30px;line-height:1.95;font-weight:500;color:var(--muted)}
 .meal{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 .meal-art{background:var(--band);border:3px solid var(--line);border-radius:24px;padding:24px}
 .times{border:3px solid var(--line);border-radius:18px;background:var(--paper2);overflow:hidden}
@@ -335,3 +336,4 @@ h1,h2,h3{font-family:"Shippori Mincho B1",serif;font-weight:800;letter-spacing:-
   .code{font-size:30px}
   .dn3{padding:28px 16px 26px}
 }
+.nw{white-space:nowrap}
